@@ -44,6 +44,7 @@ const StatCard = ({ icon: Icon, label, href }: StatCardProps) => (
           )}
         </div>
         <div>
+          <p>Hello</p>
           <div className="text-base text-[#15192C]">{label}</div>
         </div>
       </CardContent>
@@ -172,7 +173,6 @@ export default function Calls() {
 
   return (
     <div className="space-y-8 mb-4 mt-0">
-      <p>_______---____</p>
       <DateLocationPicker
         initialDate={new Date(fromDate)}
         finalDate={new Date(toDate)}
@@ -181,7 +181,6 @@ export default function Calls() {
       />
       {callCategories.map((category, index) => (
         <div key={index} className="space-y-4">
-          <p>111</p>
           <h2 className="text-[26px] font-semibold">{category.title}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {category.stats.map((stat, statIndex) => (
