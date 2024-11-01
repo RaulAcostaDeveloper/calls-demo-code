@@ -1,0 +1,53 @@
+{
+  "name": "sumeetdemo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@nextui-org/date-picker": "^2.1.8",
+    "@radix-ui/react-accordion": "^1.2.0",
+    "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-popover": "^1.1.1",
+    "@radix-ui/react-progress": "^1.1.0",
+    "@radix-ui/react-select": "^2.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-toggle": "^1.1.0",
+    "@radix-ui/react-tooltip": "^1.1.2",
+    "@types/react-date-range": "^1.4.9",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "crypto-browserify": "^3.12.0",
+    "date-fns": "^3.6.0",
+    "firebase": "10.12.4",
+    "firebase-admin": "^12.6.0",
+    "lucide-react": "^0.436.0",
+    "next": "14.2.6",
+    "next-firebase-auth-edge": "^1.4.1",
+    "react": "^18",
+    "react-date-range": "^2.0.1",
+    "react-day-picker": "8.10.1",
+    "react-dom": "^18",
+    "react-icons": "^5.3.0",
+    "sonner": "^1.5.0",
+    "stream-browserify": "^3.0.0",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.6"
+  }
+}
