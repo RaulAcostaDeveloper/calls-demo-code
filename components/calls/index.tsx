@@ -44,7 +44,6 @@ const StatCard = ({ icon: Icon, label, href }: StatCardProps) => (
           )}
         </div>
         <div>
-          <p>Hello</p>
           <div className="text-base text-[#15192C]">{label}</div>
         </div>
       </CardContent>
