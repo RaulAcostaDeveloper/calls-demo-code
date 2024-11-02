@@ -1,3 +1,4 @@
+import CallDetail from "@/components/calls/call-detail";
 import { WithPermissions } from "@/components/with-permissions";
 import { LoaderCircle } from "lucide-react";
 import { Metadata } from "next";
@@ -8,14 +9,7 @@ export const metadata: Metadata = {
     description: "This is just a demo of the timeline page",
 };
 
-interface PageProps {
-    params: {
-        callId: string;
-    };
-}
-
-export default function TimelinePage({ params }: PageProps) {
-    const { callId } = params;
+export default function TimelinePage() {
     return (
         <WithPermissions requiredPermission="calls_tab_enabled">
             <Suspense
@@ -25,8 +19,7 @@ export default function TimelinePage({ params }: PageProps) {
                     </div>
                 }
             >
-                <p>hello</p>
-                <p>Call id: {callId}</p>
+                <CallDetail></CallDetail>
             </Suspense>
         </WithPermissions>
     );
