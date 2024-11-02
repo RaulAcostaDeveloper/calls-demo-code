@@ -17,6 +17,7 @@ import {
 } from "../ui/accordion";
 import { Key, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { DocumentData } from "firebase/firestore";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -175,7 +176,9 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
               {locationsMap[call.location_id] || "Unknown Location"}
             </Badge>
           </div>
-          <button className="callDetailsButton">Call details</button>
+          <Link href={`/calls/call-detail/${call.id}`}>
+            <button className="callDetailsButton">Call details</button>
+          </Link>
         </div>
         {call.ongoing_call_status &&
           (
