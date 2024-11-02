@@ -1,16 +1,10 @@
 "use client";
 
 import {
-  Building,
   Phone,
-  PhoneCall,
   Play,
   PauseCircle,
-  Headset,
   Voicemail,
-  PhoneMissed,
-  Loader,
-  Ellipsis,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
@@ -22,6 +16,7 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import { Key, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { DocumentData } from "firebase/firestore";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -33,14 +28,11 @@ import {
 } from "../ui/tooltip";
 import {
   AgentIcon,
-  BusinessIcon,
-  InMenuIcon,
-  LoaderCustomIcon,
   MissedCallIcon,
 } from "@/constants/icons";
 import { BsBuildings } from "react-icons/bs";
-import { Progress } from "../ui/progress";
 import { useAudio } from "./audio-context";
+import './tymeline-styles.css';
 
 type CallCardProps = {
   call: DocumentData;
@@ -156,55 +148,54 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
   };
 
   return (
-    <Card className="w-full p-2 lg:p-4">
+    <Card className={`w-full p-2 lg:p-4 callCardStyle ${call.ongoing_call_status ? 'onGoingCallCard' : 'onFinishedCallCard'}`}>
       <div className="flex flex-col">
-        <div className="flex justify-between items-start">
+        <div className="flex justify-between items-center flex-wrap">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-x-2.5 gap-y-3 sm:gap-3">
             <div className="flex items-center gap-3">
-              <p className="text-[13px] md:text-base lg:text-lg font-medium text-[#59AFF3] underline">
+              <p className="text-[13px] md:text-base lg:text-lg font-medium text-[#59AFF3] underline phoneNumber">
                 {formatPhoneNumber(call.phone_number)}
               </p>
-              <Button
-                onClick={handleCallNow}
-                className="bg-[#59AFF3] text-white hover:bg-[#4591ca] py-2 px-1.5 h-1 md:py-3.5 md:px-3 lg:rounded-md rounded-sm"
-              >
-                <Phone className="mr-2 h-3 w-3 md:h-4 md:w-4" />
-                <span className="font-semibold text-[12.28px] md:text-base">
-                  Call now
-                </span>
-              </Button>
+              {call.ongoing_call_status === "" &&
+                <Button
+                  onClick={handleCallNow}
+                  className="bg-[#59AFF3] text-white hover:bg-[#4591ca] py-2 px-1.5 h-1 md:py-3.5 md:px-3 lg:rounded-md rounded-sm"
+                >
+                  <Phone className="mr-2 h-3 w-3 md:h-4 md:w-4" />
+                  <span className="font-semibold text-[12.28px] md:text-base">
+                    Call now
+                  </span>
+                </Button>
+              }
             </div>
-            <Badge className="lg:mt-0 rounded-sm font-normal max-md:text-[11px] max-md:px-2 max-md:py-1.5 max-md:h-1">
+            <Badge className="lg:mt-0 rounded-sm font-normal max-md:text-[11px] max-md:px-2 max-md:py-1.5 max-md:h-1 locationName">
+              {call.ongoing_call_status &&
+                <Image className="locationIcon" src={'/assets/locationIcon.png'} width={50} height={50} alt="location icon" />
+              }
               {locationsMap[call.location_id] || "Unknown Location"}
             </Badge>
           </div>
-
-          <p
-            className={cn(
-              "text-[#FFA500] text-[11.16px] sm:text-xs md:text-sm lg:text-base flex justify-center items-center whitespace-nowrap gap-x-2 text-end",
-              {
-                "text-[#59AFF3]": call.ongoing_call_status === "In menu",
-                "text-[#00A807]": call.ongoing_call_status === "Connected",
-              }
-            )}
-          >
-            {call.ongoing_call_status && (
-              <LoaderCustomIcon
-                className={"animate-spin h-3 w-3 lg:w-6 lg:h-6 "}
-              />
-            )}
-            {call.ongoing_call_status}
-            {call.ongoing_call_status === "Connecting" ? (
-              <PhoneCall className="h-3 w-3 lg:h-5 lg:w-5" />
-            ) : call.ongoing_call_status === "In menu" ? (
-              <InMenuIcon className="h-3 w-3 lg:h-5 lg:w-5" />
-            ) : call.ongoing_call_status === "Connected" ? (
-              <Phone className="h-3 w-3 lg:h-5 lg:w-5" />
-            ) : null}
-          </p>
+          <button className="callDetailsButton">Call details</button>
+        </div>
+        {call.ongoing_call_status &&
+          (
+            <div className="guestLabelsContainer">
+              {call.guest_labels.map((el: string) => (
+                <div key={el} className="bigGuestLabels">
+                  {el}
+                </div>
+              ))}
+            </div>
+          )}
+        <div className="guestLabelsContainer">
+          {call.labels.map((el: string) => (
+            <div key={el} className="smallGuestLabels">
+              {el}
+            </div>
+          ))}
         </div>
         <div className="flex  items-center justify-between flex-wrap gap-2">
-          <div className="flex items-center justify-start gap-2 lg:gap-3 mt-5">
+          <div className="flex items-center justify-start gap-2 lg:gap-3 mt-5 timeOfCall">
             {icons.map((icon, index) => {
               if (call.icon_type === icon.label) {
                 return (
@@ -225,13 +216,12 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
                 );
               }
             })}
-
             <p className="font-medium text-[13px] md:text-base">
               {call.call_start_time}
             </p>
           </div>
           {call.recording_url && (
-            <div className="flex items-center justify-center gap-2 mt-5">
+            <div className="flex items-center justify-center gap-2 mt-5 playCall">
               {/* Play/Pause Button */}
               {isPlaying ? (
                 <Button
@@ -268,18 +258,18 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
               <p className="text-[10.16px] md:text-base min-w-[40px] text-center">
                 {call.call_length_in_seconds !== -1 && !timePlayed
                   ? (() => {
-                      const roundedSeconds = Math.round(
-                        call.call_length_in_seconds
-                      );
-                      const minutes = Math.floor(roundedSeconds / 60);
-                      const seconds = String(roundedSeconds % 60).padStart(
-                        2,
-                        "0"
-                      );
-                      return `${minutes}:${seconds}`;
-                    })()
+                    const roundedSeconds = Math.round(
+                      call.call_length_in_seconds
+                    );
+                    const minutes = Math.floor(roundedSeconds / 60);
+                    const seconds = String(roundedSeconds % 60).padStart(
+                      2,
+                      "0"
+                    );
+                    return `${minutes}:${seconds}`;
+                  })()
                   : timePlayed
-                  ? (() => {
+                    ? (() => {
                       const roundedSeconds = Math.round(timePlayed);
                       const minutes = Math.floor(roundedSeconds / 60);
                       const seconds = String(roundedSeconds % 60).padStart(
@@ -288,33 +278,11 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
                       );
                       return `${minutes}:${seconds}`;
                     })()
-                  : null}
+                    : null}
               </p>
             </div>
           )}
         </div>
-
-        {/* Labels Wrapper */}
-        {call.labels && call.labels.length > 0 && (
-          <div className="flex flex-wrap gap-2 my-4">
-            {call.labels.map((label: string, index: Key | null | undefined) => (
-              <Badge
-                key={index}
-                className={cn(
-                  "rounded-sm bg-[#EAEAEA] text-black font-normal max-md:text-[11px] hover:bg-[#EAEAEA] py-1.5 px-2 h-2 md:py-2.5 md:px-2",
-                  {
-                    "bg-[#00A807] text-white": label === "Upsell",
-                    "bg-[#FF2A2A] text-white hover:bg-[#FF2A2A]":
-                      label === "Complaint",
-                  }
-                )}
-              >
-                {label}
-              </Badge>
-            ))}
-          </div>
-        )}
-
         {call.transcript_summary && (
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
@@ -322,7 +290,7 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
                 onClick={() => setIsShowingTranscript(!isShowingTranscript)}
                 className="text-start font-normal text-base max-md:text-[12px] hover:no-underline"
               >
-                {call.transcript_summary}
+                <span className="transcriptedTextCall">{call.transcript_summary}</span>
                 <span className="text-[#59AFF3] hover:underline">
                   &nbsp; show {isShowingTranscript ? "less" : "more"}
                 </span>
@@ -335,15 +303,13 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
                       return (
                         <div
                           key={index}
-                          className={`flex ${
-                            isTeamMember ? "justify-end" : "justify-start"
-                          }`}
+                          className={`flex ${isTeamMember ? "justify-end" : "justify-start"
+                            }`}
                         >
                           <div className="relative max-w-[80%] mx-2">
                             <div
-                              className={`relative ${
-                                isTeamMember ? "bg-[#D8FDD2]" : "bg-[#F3F3F3]"
-                              } p-3 max-md:p-1.5 rounded-lg text-base max-md:text-[12px]`}
+                              className={`relative ${isTeamMember ? "bg-[#D8FDD2]" : "bg-[#F3F3F3]"
+                                } p-3 max-md:p-1.5 rounded-lg text-base max-md:text-[12px]`}
                             >
                               {message
                                 .replace("Team member:", "")
@@ -389,6 +355,12 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+        )}
+        {call.ongoing_call_status && (
+          <div className="callOngoinStatus">
+            <p>{call.ongoing_call_status}</p>
+            <Image src={'/assets/greenCallIcon.png'} width={20} height={20} alt="green call icon" />
+          </div>
         )}
       </div>
     </Card>

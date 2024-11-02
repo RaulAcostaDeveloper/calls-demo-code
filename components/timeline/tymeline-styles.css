@@ -1,0 +1,160 @@
+.callCardStyle {
+    box-shadow: 0px 4px 12px 0px #0000007D;
+    border: none;
+
+    .callDetailsButton {
+        padding: 10px 35px;
+        background-color: #59AFF3;
+        border-radius: 4px;
+    }
+
+    .guestLabelsContainer {
+        display: flex;
+        margin-top: 20px;
+
+        .smallGuestLabels {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            height: auto;
+            margin-right: 15px;
+        }
+    }
+}
+
+.onGoingCallCard {
+    background-color: #212121;
+    padding: 30px 20px;
+
+    .phoneNumber {
+        color: white;
+        font-size: 42px;
+        text-decoration-thickness: 2px;
+        line-height: 45px;
+    }
+
+    .locationName {
+        font-size: 32px;
+        background-color: transparent;
+        height: auto;
+        line-height: 30px;
+
+        .locationIcon {
+            width: 30px;
+            margin-right: 10px;
+        }
+    }
+
+    .guestLabelsContainer {
+        .bigGuestLabels {
+            margin-right: 15px;
+            background-color: white;
+            font-size: 20px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .smallGuestLabels {
+            background-color: white;
+            color: #15192C;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            height: auto;
+            margin-right: 15px;
+        }
+    }
+
+    .timeOfCall {
+        color: white;
+    }
+
+    .playCall {
+        color: white;
+
+        button {
+            background-color: white;
+            padding: 2px;
+        }
+    }
+
+    .callOngoinStatus {
+        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: right;
+        color: #00FF66;
+
+        img {
+            margin-left: 5px;
+        }
+    }
+
+    .transcriptedTextCall {
+        color: white;
+    }
+}
+
+.onFinishedCallCard {
+    .phoneNumber {
+        font-weight: 700;
+    }
+
+    .guestLabelsContainer {
+        .smallGuestLabels {
+            background-color: #EAEAEA;
+            color: black;
+        }
+    }
+}
+@media (max-width: 1024px) {
+    .onGoingCallCard {
+        .callDetailsButton {
+            margin-top: 20px;
+        }
+        .phoneNumber {
+            font-size: 35px;
+        }
+        .locationName {
+            font-size: 25px;
+            padding: 0;
+            margin: 12px 0;
+        }
+    }
+}
+@media (max-width: 425px) {
+    .onGoingCallCard {
+        .callDetailsButton {
+            margin-top: 10px;
+        }
+
+
+
+        .guestLabelsContainer {
+            .bigGuestLabels {
+                font-size: 15px;
+            }
+        }
+    }
+}
+
+@media (max-width: 375px) {
+    .onGoingCallCard {
+        .phoneNumber {
+            color: white;
+            font-size: 30px;
+        }
+
+        .locationName {
+            font-size: 20px;
+        }
+    }
+    .onFinishedCallCard {
+        .callDetailsButton {
+            margin-top: 20px;
+        }
+    }
+}
