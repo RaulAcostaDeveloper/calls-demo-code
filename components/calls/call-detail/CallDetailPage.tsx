@@ -1,13 +1,16 @@
+'use client'
 import { useEffect, useState } from "react";
-import { CallData } from "./CallDetail.model"
-import { Header } from "./CallDetailsComponents/Header/Header";
 import { db } from "@/lib/firebaseClient";
 import { hasAccessToLocation, useAuth } from "@/providers/auth-provider";
-
 import {
     collection,
     getDocs,
 } from "firebase/firestore";
+import { CallData } from "./CallDetail.model"
+import { Header } from "./CallDetailsComponents/Header/Header";
+import './CallDetailStyle.css';
+import { FocusAreaSection } from "./CallDetailsComponents/FocusAreaSection/FocusAreaSection";
+import { RightAreaSection } from "./CallDetailsComponents/RightAreaSection/RightAreaSection";
 
 interface Props {
     callDetails: CallData;
@@ -29,7 +32,6 @@ export const CallDetailPage = ({ callDetails }: Props) => {
     const [locationsMap, setLocationsMap] = useState<{ [key: string]: any }>({});
     const [userLocation, setUserLocation] = useState('');
     const [callFormatedDate, setCallFormatedDate] = useState('');
-
     const { userDetails } = useAuth();
 
     useEffect(() => {
@@ -57,7 +59,7 @@ export const CallDetailPage = ({ callDetails }: Props) => {
                 acc[loc.id] = loc.display_name;
                 return acc;
             }, {} as { [key: string]: string });
-            
+
             setLocationsMap(locationsMapObj);
         };
 
@@ -79,13 +81,17 @@ export const CallDetailPage = ({ callDetails }: Props) => {
     }, [callDetails.location_id, locationsMap])
 
     return (
-        <div>
+        <div className="callDetailPageStyle">
             <Header
                 phoneNumber={callDetails.phone_number}
                 location={userLocation}
                 callDate={callFormatedDate}
                 callStartTime={callDetails.call_start_time}
                 instructionLabels={callDetails.instruction_labels} />
+            <div className="bottomArea">
+                <FocusAreaSection focusAreaSection={callDetails.focus_area_section} />
+                <RightAreaSection />
+            </div>
         </div>
     )
 }
