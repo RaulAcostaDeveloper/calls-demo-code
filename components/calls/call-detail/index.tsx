@@ -5,6 +5,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { LoaderCircle } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { CallDetailPage } from "./CallDetailPage";
 
 export default function CallDetailConnector() {
   const { callId } = useParams();
@@ -20,14 +21,13 @@ export default function CallDetailConnector() {
         console.error("Collection name is not defined");
         return;
       }
-     
+
       try {
         const callDocRef = doc(db, collectionName, callId.toString()); // use callId as document ID
         const callSnapshot: any = await getDoc(callDocRef);
 
         if (callSnapshot.exists()) {
-            const data = callSnapshot.data();
-            console.log(data);
+          const data = callSnapshot.data();
           setCallDetails({ id: callSnapshot.id, ...data });
         } else {
           console.error("Call not found");
@@ -52,9 +52,7 @@ export default function CallDetailConnector() {
 
   return (
     <div>
-      {/* Render call details */}
-      <h1>connector</h1>
-      {/* Add additional fields from callDetails as needed */}
+      <CallDetailPage callDetails={callDetails} />
     </div>
   );
 }

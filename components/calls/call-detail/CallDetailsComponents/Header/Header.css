@@ -1,0 +1,134 @@
+.callDetailHeaderStyle {
+    background-color: #E1E1E1;
+    padding: 15px;
+    border-radius: 10px;
+    .topHeader {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .float {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .phoneNumber {
+            display: flex;
+            align-items: center;
+            font-size: 40px;
+            font-weight: 500;
+            margin-right: 50px;
+
+            img {
+                width: 27px;
+                height: auto;
+                margin-left: 10px;
+            }
+        }
+        .location {
+            font-weight: 500;
+            font-size: 32px;
+            color: #15192C;
+        }
+        .callDate {
+            font-weight: 500;
+            color: #212121;
+            font-size: 24px;
+            margin-right: 80px;
+        }
+        .callStartTime {
+            display: inline;
+            border-radius: 6px;
+            padding: 5px 8px;
+            border: 1px solid #212121;
+            color: #212121;
+            font-weight: 500;
+            text-align: center;
+            .timeAndPeriod {
+                font-size: 24px;
+            }
+            .zone {
+                font-size: 16px;
+            }
+        }
+    }
+    .bottomHeader {
+        display: flex;
+        flex-wrap: wrap;
+        .label {
+            margin: 10px 0;
+            color: white;
+            font-size: 20px;
+            font-weight: 500;
+            background-color: #15192C;
+            margin-right: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    }
+}
+@media (max-width: 1440px) {
+    .callDetailHeaderStyle {
+        .topHeader {
+            .phoneNumber {
+                margin-right: 30px;
+            }
+            .callDate {
+                margin-right: 50px;
+            }
+        }
+    }
+}
+@media (max-width: 1024px) {
+    .callDetailHeaderStyle {
+        .topHeader {
+            margin-bottom: 20px;
+            .float {
+                width: 100%;
+            }
+        }
+    }
+
+}
+@media (max-width: 425px) {
+    .callDetailHeaderStyle {
+        .topHeader {
+            .phoneNumber {
+                font-size: 30px;
+                margin-bottom: 10px;
+            }
+            .location {
+                font-size: 25px;
+            }
+            .callStartTime {
+                margin-top: 15px;
+            }
+        }
+        .bottomHeader {
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+    }
+
+}
+
+@media (max-width: 320px) {
+    .callDetailHeaderStyle {
+        .topHeader {
+            .phoneNumber {
+                font-size: 20px;
+                img {
+                    width: 20px;
+                    height: auto;
+                }
+            }
+            .location {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+            .callDate {
+                font-size: 20px;
+            }
+        }
+    }
+}
