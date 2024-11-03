@@ -90,6 +90,8 @@
 
         img {
             margin-left: 5px;
+            height: auto;
+            width: auto;
         }
     }
 

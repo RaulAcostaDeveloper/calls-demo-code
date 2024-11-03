@@ -1,4 +1,4 @@
-import CallDetail from "@/components/calls/call-detail";
+import CallDetailConnector from "@/components/calls/call-detail";
 import { WithPermissions } from "@/components/with-permissions";
 import { LoaderCircle } from "lucide-react";
 import { Metadata } from "next";
@@ -19,7 +19,7 @@ export default function TimelinePage() {
                     </div>
                 }
             >
-                <CallDetail></CallDetail>
+                <CallDetailConnector />
             </Suspense>
         </WithPermissions>
     );

@@ -6,7 +6,7 @@ import { LoaderCircle } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function CallDetail() {
+export default function CallDetailConnector() {
   const { callId } = useParams();
   const [callDetails, setCallDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,9 +20,9 @@ export default function CallDetail() {
         console.error("Collection name is not defined");
         return;
       }
-
+     
       try {
-        const callDocRef = doc(db, collectionName, callId); // use callId as document ID
+        const callDocRef = doc(db, collectionName, callId.toString()); // use callId as document ID
         const callSnapshot: any = await getDoc(callDocRef);
 
         if (callSnapshot.exists()) {
@@ -53,7 +53,7 @@ export default function CallDetail() {
   return (
     <div>
       {/* Render call details */}
-      <h1>Etquis</h1>
+      <h1>connector</h1>
       {/* Add additional fields from callDetails as needed */}
     </div>
   );
