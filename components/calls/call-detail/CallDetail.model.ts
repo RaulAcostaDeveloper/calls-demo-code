@@ -10,7 +10,7 @@ export interface CallData {
     input_buttons_schema?: InputButtonSchema[];
     action_buttons_section?: ActionButtonSection[];
     location_id?: string;
-    input_buttons_data?: InputButtonsData;
+    input_buttons_data?: (string | boolean)[];
     last_update_time_utc?: number;
     transcript_summary?: string;
     instruction_labels?: string[];
@@ -35,17 +35,16 @@ export interface CallData {
     display_text: string;
   }
   
-  interface InputButtonSchema {
+  export interface InputButtonSchema {
     title: string;
-    rows: {
-      [key: string]: InputButton[];
-    };
+    rows: RowElements[][];
   }
-  
-  interface InputButton {
-    type: string;
+
+  export interface RowElements {
     display_text: string;
     key_name: string;
+    type: string;
+    value?: boolean | string;
   }
   
   interface ActionButtonSection {
@@ -60,19 +59,6 @@ export interface CallData {
     display_text: string;
   }
   
-  interface InputButtonsData {
-    marked_for_admin_review_notes: string;
-    upsell_dollars: string;
-    marked_for_admin_review: boolean;
-    upsell_highlights_successful: boolean;
-    marked_for_manager_review: boolean;
-    upsell_treatment_successful: boolean;
-    marked_for_manager_review_notes: string;
-    marked_for_salon_review: boolean;
-    upsell_highlights_attempted: boolean;
-    marked_for_salon_review_notes: string;
-    upsell_treatment_attempted: boolean;
-  }
   
   interface FocusAreaSection {
     html: string;

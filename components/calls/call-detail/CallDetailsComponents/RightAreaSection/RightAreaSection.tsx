@@ -1,16 +1,19 @@
 'use client'
+import { CallData } from '../../CallDetail.model';
+import { FormSection } from './FormSection/FormSection';
 import './RightAreaSection.css';
 
 interface Props {
-    isWrapped: boolean;
+    callDetails: CallData;
 }
 
-export const RightAreaSection = () => {
-
+export const RightAreaSection = ({ callDetails }: Props) => {
     return (
         <div className="rightAreaSection">
             <div className='inner'>
-                right
+                <FormSection
+                    inputButtonsData={callDetails.input_buttons_data}
+                    inputButtonsSchema={callDetails.input_buttons_schema} />
             </div>
         </div>
     )

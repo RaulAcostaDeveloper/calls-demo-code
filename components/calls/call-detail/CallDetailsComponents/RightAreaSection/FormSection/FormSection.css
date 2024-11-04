@@ -1,0 +1,80 @@
+.rightAreaSection {
+    .formSection {
+        border: 2px solid #CBCBCB;
+        box-shadow: 0px 0px 4.7px 0px #00000038;
+        border-radius: 8px;
+        margin-top: 10px;
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+
+        .clickeableButton {
+            border: 1px solid black;
+            color: #15192C;
+            border-radius: 6px;
+            padding: 12px 8px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 10px;
+            margin-bottom: 20px;
+        }
+
+        .buttonSelected {
+            background-color: #212121;
+            color: white;
+        }
+
+        .inputForm {
+            position: relative;
+
+            span {
+                font-size: 12px;
+                background-color: white;
+                position: absolute;
+                top: -10px;
+                left: 28px;
+                padding: 0 5px;
+            }
+
+            input {
+                border: 1px solid #212121;
+                border-radius: 7px;
+                height: 48px;
+                width: 400px;
+                margin-bottom: 10px;
+                padding: 5px;
+            }
+
+            textarea {
+                border: 1px solid #212121;
+                border-radius: 7px;
+                width: 400px;
+                margin-bottom: 10px;
+                padding: 5px;
+            }
+        }
+
+        .buttons {
+            width: 100%;
+            display: flex;
+            justify-content: right;
+            margin-bottom: 5px;
+
+            button {
+                width: 140px;
+                height: 48px;
+                color: white;
+                border-radius: 8px;
+            }
+
+            .cancel {
+                background-color: #FF2A2A;
+            }
+            
+            .save {
+                background-color: #00A542;
+                margin-left: 15px;
+            }
+        }
+    }
+}

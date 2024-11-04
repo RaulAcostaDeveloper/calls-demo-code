@@ -90,7 +90,7 @@ export const CallDetailPage = ({ callDetails }: Props) => {
                 instructionLabels={callDetails.instruction_labels} />
             <div className="bottomArea">
                 <FocusAreaSection focusAreaSection={callDetails.focus_area_section} />
-                <RightAreaSection />
+                <RightAreaSection callDetails={callDetails} />
             </div>
         </div>
     )
