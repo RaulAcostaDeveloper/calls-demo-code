@@ -41,7 +41,7 @@
                 border-radius: 7px;
                 height: 48px;
                 width: 400px;
-                margin-bottom: 10px;
+                margin-bottom: 18px;
                 padding: 5px;
             }
 
@@ -83,12 +83,7 @@
         .formSection {
             .inputForm {
                 span {
-                    font-size: 12px;
-                    background-color: white;
-                    position: absolute;
-                    top: -10px;
-                    left: 28px;
-                    padding: 0 5px;
+                    left: 15px;
                 }
     
                 input {

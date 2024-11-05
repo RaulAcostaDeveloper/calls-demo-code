@@ -59,7 +59,8 @@ export const FormSection = ({ inputButtonsData, inputButtonsSchema, handleSaveFo
             console.error('Not data found')
         }
     }
-
+    console.log('extractedArray ', extractedArray);
+    
     return (
         <div className="formSection">
             {extractedArray &&
@@ -75,13 +76,13 @@ export const FormSection = ({ inputButtonsData, inputButtonsSchema, handleSaveFo
                             {element.type === "text_field_short" &&
                                 <div className="inputForm">
                                     <span>{element.display_text}</span>
-                                    <input type="text" onChange={(e) => handleChangeText(index, e.target.value)} />
+                                    <input value={`${element.value ? element.value : '' }`} type="text" onChange={(e) => handleChangeText(index, e.target.value)} />
                                 </div>
                             }
                             {element.type === "text_field_long" &&
                                 <div className="inputForm">
                                     <span>{element.display_text}</span>
-                                    <textarea onChange={(e) => handleChangeText(index, e.target.value)} />
+                                    <textarea value={`${element.value ? element.value : '' }`} onChange={(e) => handleChangeText(index, e.target.value)} />
                                 </div>
                             }
                         </div>
