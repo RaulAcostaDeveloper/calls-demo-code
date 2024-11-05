@@ -59,7 +59,6 @@ export const FormSection = ({ inputButtonsData, inputButtonsSchema, handleSaveFo
             console.error('Not data found')
         }
     }
-    console.log('extractedArray ', extractedArray);
     
     return (
         <div className="formSection">
