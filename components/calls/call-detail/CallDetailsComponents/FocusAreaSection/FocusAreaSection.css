@@ -38,6 +38,20 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+    .focusAreaSection {
+        margin-top: 40px;
+        .section {
+            .titleSection {
+                .title {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}
+
 @media (max-width: 440px) {
     .focusAreaSection {
         min-width: 100%;

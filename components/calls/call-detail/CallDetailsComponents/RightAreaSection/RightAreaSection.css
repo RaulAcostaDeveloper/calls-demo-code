@@ -24,6 +24,13 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+    .rightAreaSection {
+        margin-top: 40px;
+    }
+}
+
 @media (max-width: 500px) {
     .rightAreaSection {
         min-width: 100%;
