@@ -85,6 +85,11 @@ export const CallDetailPage = ({ callDetails }: Props) => {
         console.log('extractedArray: ', data);
     }
 
+    const handleButtonClick = (buttonId: string) => {
+        // SEND BUTTON ACTION
+        console.log('buttonId has been clicked: ', buttonId);
+    }
+
     return (
         <div className="callDetailPageStyle">
             <Header
@@ -97,7 +102,8 @@ export const CallDetailPage = ({ callDetails }: Props) => {
                 <FocusAreaSection focusAreaSection={callDetails.focus_area_section} />
                 <RightAreaSection 
                     callDetails={callDetails} 
-                    handleSaveForm={handleSaveForm} />
+                    handleSaveForm={handleSaveForm}
+                    handleButtonClick={handleButtonClick} />
             </div>
         </div>
     )

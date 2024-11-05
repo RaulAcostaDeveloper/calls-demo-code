@@ -2,10 +2,13 @@ import { InfoButtonSection } from '../../../CallDetail.model';
 import './InfoButtonsSection.css';
 interface Props {
     buttons?: InfoButtonSection[];
+    handleButtonClick: (buttonId: string) => void;
 }
-export const InfoButtonsSection = ({ buttons }: Props) => {
+export const InfoButtonsSection = ({ buttons, handleButtonClick }: Props) => {
     console.log('buttons: ', buttons);
-    
+    const handleClickButton = (buttonId: string) => {
+        handleButtonClick(buttonId);
+    }
     return (
         <div className='infoButtonsSection'>
             {buttons &&
@@ -18,7 +21,7 @@ export const InfoButtonsSection = ({ buttons }: Props) => {
                             {rowsArray.map((element, index) => (
                                 <div key={index + index} className='buttonsContainer'>
                                     {element.map( buttons =>(
-                                        <button key={buttons.id} className='buttonSection'>{buttons.display_text}</button>
+                                        <button key={buttons.id} className='buttonSection' onClick={()=>handleClickButton(buttons.id)}>{buttons.display_text}</button>
                                     ))}
                                 </div>
                             ))}
