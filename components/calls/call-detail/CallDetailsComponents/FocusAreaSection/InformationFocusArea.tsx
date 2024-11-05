@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const InformationFocusArea = ({ title, html }: Props) => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
 
     return (
         <div className='section'>
