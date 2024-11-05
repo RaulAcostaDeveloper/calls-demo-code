@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { InputButtonSchema, RowElements } from "../../../CallDetail.model";
 import './FormSection.css';
+import { ModalCancelWithoutSaving } from "./ModalCancelWithoutSaving/ModalCancelWithoutSaving";
 
 interface Props {
     inputButtonsSchema?: InputButtonSchema[];
@@ -9,6 +10,7 @@ interface Props {
 
 export const FormSection = ({ inputButtonsData, inputButtonsSchema }: Props) => {
     const [extractedArray, setExtractedArray] = useState<Array<RowElements>>();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
 
@@ -64,7 +66,7 @@ export const FormSection = ({ inputButtonsData, inputButtonsSchema }: Props) => 
                             {element.type === "clickable_button" &&
                                 <button
                                     className={`
-                                        ${element.value ? 'buttonSelected' : ''} clickeableButton`} 
+                                        ${element.value ? 'buttonSelected' : ''} clickeableButton`}
                                     onClick={() => handleToggleBooleanButton(index)}>{element.display_text}</button>
                             }
                             {element.type === "text_field_short" &&
@@ -83,10 +85,14 @@ export const FormSection = ({ inputButtonsData, inputButtonsSchema }: Props) => 
                     ))}
                 </>
             }
+
             <div className="buttons">
-                <button className="cancel">Cancel</button>
+                <button className="cancel" onClick={() => setIsModalOpen(true)}>Cancel</button>
                 <button className="save" onClick={handleSave}>Save</button>
             </div>
+
+            {isModalOpen && <ModalCancelWithoutSaving setIsModalOpen={() => setIsModalOpen(false)} />}
+
         </div>
     )
 }

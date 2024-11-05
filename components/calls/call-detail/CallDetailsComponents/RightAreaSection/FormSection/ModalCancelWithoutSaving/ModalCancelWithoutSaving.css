@@ -1,0 +1,80 @@
+.modalCancelWithoutSaving {
+    position:fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00000070;
+    .innerModal {
+        border-radius: 20px;
+        background-color: white;
+        width: 660px;
+        height: 330px;
+        text-align: center;
+        padding: 30px 20px;
+        max-width: 90%;
+        position: relative;
+        .titleModal {
+            font-weight: 600;
+            font-size: 37px;
+            line-height: 56px;
+        }
+        .textModal {
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 22px;
+            margin-top: 20px;
+        }
+        .buttonsModal {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            button {
+                font-weight: 600;
+                font-size: 22px;
+                color: white;
+                border-radius: 12px;
+                text-align: center;
+                width: 200px;
+                height: 67px;
+            }
+            .yesButtonModal {
+                background-color: #FF2A2A;
+                margin-right: 10px;
+            }
+            .noButtonModal {
+                background-color: #00A542;
+            }
+        }
+    }
+}
+@media (max-width: 768px) {
+    .modalCancelWithoutSaving {
+        .innerModal {
+            .titleModal {
+                font-size: 30px;
+            }
+            .textModal {
+                font-size: 20px;
+            }
+            .buttonsModal {
+                button {
+                    font-weight: 600;
+                    font-size: 18px;
+                    color: white;
+                    border-radius: 12px;
+                    text-align: center;
+                    width: 150px;
+                    height: 67px;
+                }
+            }
+        }
+
+    }
+}

@@ -78,3 +78,27 @@
         }
     }
 }
+@media (max-width: 500px) {
+    .rightAreaSection {
+        .formSection {
+            .inputForm {
+                span {
+                    font-size: 12px;
+                    background-color: white;
+                    position: absolute;
+                    top: -10px;
+                    left: 28px;
+                    padding: 0 5px;
+                }
+    
+                input {
+                    width: 260px;
+                }
+
+                textarea {
+                    width: 260px;
+                }
+            }
+        }
+    }
+}

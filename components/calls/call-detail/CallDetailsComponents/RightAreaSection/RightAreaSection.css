@@ -18,14 +18,18 @@
         margin-left: 0;
         display: flex;
         justify-content: center;
-        
+
         .inner {
             width: 440px;
         }
     }
 }
-@media (max-width: 440px) {
+@media (max-width: 500px) {
     .rightAreaSection {
         min-width: 100%;
+        
+        .inner {
+            width: 300px;
+        }
     }
 }
