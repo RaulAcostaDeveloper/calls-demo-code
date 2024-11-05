@@ -6,7 +6,7 @@ import {
     collection,
     getDocs,
 } from "firebase/firestore";
-import { CallData } from "./CallDetail.model"
+import { CallData, RowElements } from "./CallDetail.model"
 import { Header } from "./CallDetailsComponents/Header/Header";
 import './CallDetailStyle.css';
 import { FocusAreaSection } from "./CallDetailsComponents/FocusAreaSection/FocusAreaSection";
@@ -78,7 +78,12 @@ export const CallDetailPage = ({ callDetails }: Props) => {
         if (callDetails.location_id && locationsMap) {
             setUserLocation(`${locationsMap[callDetails.location_id] || "Unknown Location"}`);
         }
-    }, [callDetails.location_id, locationsMap])
+    }, [callDetails.location_id, locationsMap]);
+
+    const handleSaveForm = (data: RowElements[]) => {
+        // SEND DATA FORM
+        console.log('extractedArray: ', data);
+    }
 
     return (
         <div className="callDetailPageStyle">
@@ -90,7 +95,9 @@ export const CallDetailPage = ({ callDetails }: Props) => {
                 instructionLabels={callDetails.instruction_labels} />
             <div className="bottomArea">
                 <FocusAreaSection focusAreaSection={callDetails.focus_area_section} />
-                <RightAreaSection callDetails={callDetails} />
+                <RightAreaSection 
+                    callDetails={callDetails} 
+                    handleSaveForm={handleSaveForm} />
             </div>
         </div>
     )

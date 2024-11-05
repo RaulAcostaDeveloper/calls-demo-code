@@ -23,16 +23,14 @@ export interface CallData {
     labels?: string[];
   }
 
-  interface InfoButtonSection {
+  export interface InfoButtonSection {
     title: string;
-    rows: {
-      [key: string]: InfoButton[];
-    };
+    rows: ButtonsInfo[][]
   }
-  
-  interface InfoButton {
-    id: string;
+
+  interface ButtonsInfo {
     display_text: string;
+    id: string;
   }
   
   export interface InputButtonSchema {

@@ -1,0 +1,35 @@
+.infoButtonsSection {
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #ECECEC;
+    .titleButtonsSection {
+        font-weight: 600;
+        font-size: 24px;
+        color: #15192C;
+        margin: 20px 0;
+    }
+    .row {
+        width: 100%;
+        .buttonsContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+            .buttonSection {
+                width: 180px;
+                height: 52px;
+                font-size: 12px;
+                font-weight: 700;
+                background-color: white;
+                box-shadow: 0px 0px 2.77px 0px #00000038;
+                border-radius: 5px;
+                padding-left: 10px;
+                margin-bottom: 20px;
+                text-align: left;
+            }
+        }
+    }
+}

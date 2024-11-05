@@ -6,9 +6,10 @@ import { ModalCancelWithoutSaving } from "./ModalCancelWithoutSaving/ModalCancel
 interface Props {
     inputButtonsSchema?: InputButtonSchema[];
     inputButtonsData?: (string | boolean)[];
+    handleSaveForm: (data: RowElements[]) => void;
 }
 
-export const FormSection = ({ inputButtonsData, inputButtonsSchema }: Props) => {
+export const FormSection = ({ inputButtonsData, inputButtonsSchema, handleSaveForm }: Props) => {
     const [extractedArray, setExtractedArray] = useState<Array<RowElements>>();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -52,9 +53,11 @@ export const FormSection = ({ inputButtonsData, inputButtonsSchema }: Props) => 
     }
 
     const handleSave = () => {
-        // SEND DATA
-        console.log('extractedArray: ', extractedArray);
-
+        if (extractedArray) {
+            handleSaveForm(extractedArray);
+        } else {
+            console.error('Not data found')
+        }
     }
 
     return (
