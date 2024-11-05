@@ -1,14 +1,17 @@
 import { InfoButtonSection } from '../../../CallDetail.model';
 import './InfoButtonsSection.css';
+
 interface Props {
     buttons?: InfoButtonSection[];
     handleButtonClick: (buttonId: string) => void;
 }
+
 export const InfoButtonsSection = ({ buttons, handleButtonClick }: Props) => {
-    console.log('buttons: ', buttons);
+
     const handleClickButton = (buttonId: string) => {
         handleButtonClick(buttonId);
     }
+    
     return (
         <div className='infoButtonsSection'>
             {buttons &&
