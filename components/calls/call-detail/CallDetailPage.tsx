@@ -15,6 +15,7 @@ import './CallDetailStyle.css';
 import { FocusAreaSection } from "./CallDetailsComponents/FocusAreaSection/FocusAreaSection";
 import { RightAreaSection } from "./CallDetailsComponents/RightAreaSection/RightAreaSection";
 import { HttpService } from "@/lib/modules/http/service";
+import { toast } from "sonner";
 
 interface Props {
     callDetails: CallData;
@@ -116,8 +117,23 @@ export const CallDetailPage = ({ callDetails }: Props) => {
     }
 
     const handleButtonClick = (buttonId: string) => {
-        // SEND BUTTON ACTION
-        console.log('buttonId has been clicked: ', buttonId);
+        const data = {
+            token: "",
+            call_id: callDetails.id,
+            info_button_id: buttonId
+        };
+
+        toast.promise(async () => {
+            const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/info`;
+            const response = await httpService.post(uri, data)
+            if(!response){
+                throw new Error(`Error call details: ${response}`);
+            }
+        }, {
+            loading: "Call details fetchin...",
+            success: "Call details founded",
+            error: "Call details error",
+        });
     }
 
     function formatFormData(data: RowElements[]){
