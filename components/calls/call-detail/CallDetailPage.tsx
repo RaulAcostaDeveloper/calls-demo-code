@@ -37,8 +37,8 @@ export const CallDetailPage = ({ callDetails }: Props) => {
     const [userLocation, setUserLocation] = useState('');
     const [callFormatedDate, setCallFormatedDate] = useState('');
     const [timezone, setTimezone] = useState('');
-
     const { userDetails } = useAuth();
+    const httpService = new HttpService();
 
     useEffect(() => {
         const fetchLocations = async () => {
@@ -88,28 +88,31 @@ export const CallDetailPage = ({ callDetails }: Props) => {
     }, [callDetails.location_id, locationsMap]);
 
     const handleSaveForm = async(data: RowElements[]) => {
-        const callId: string = callDetails.id || "";
-        const collectionName = process.env.NEXT_PUBLIC_CALLS_COLLECTION_NAME || '';
-        const bodyRequest = formatFormData(data);
+        try{
+            const callId: string = callDetails.id || "";
+            const bodyRequest = formatFormData(data);
 
-        //fire-store
-        const callDocRef = doc(db, collectionName, callId);
-        const callSnapshot: any = await getDoc(callDocRef);
+            //fire-store
+            // const callDocRef = doc(db, collectionName, callId);
+            // const callSnapshot: any = await getDoc(callDocRef);
 
-        if (!callSnapshot.exists()) {
-            console.log('Call-detail not found')
-          return;
-        } 
+            // if (!callSnapshot.exists()) {
+            //     console.log('Call-detail not found')
+            // return;
+            // } 
 
-        await updateDoc(callDocRef, {
-            input_buttons_data: bodyRequest
-        });
+            // await updateDoc(callDocRef, {
+            //     input_buttons_data: bodyRequest
+            // });
 
-        //Backend
-        const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/input}`;
-        const httpService = new HttpService();
-        const response = await httpService.post(uri, { input_buttons_data: bodyRequest, call_id: callId });
-        console.log(response);
+            //Backend
+            const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/input`;
+            const response = await httpService.post(uri, { input_buttons_data: bodyRequest, call_id: callId });
+            console.log(response);
+        }
+        catch(e){
+            console.log(e);
+        }
     }
 
     const handleButtonClick = (buttonId: string) => {
