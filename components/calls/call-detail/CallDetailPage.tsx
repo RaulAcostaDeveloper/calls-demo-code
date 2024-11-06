@@ -16,6 +16,7 @@ import { FocusAreaSection } from "./CallDetailsComponents/FocusAreaSection/Focus
 import { RightAreaSection } from "./CallDetailsComponents/RightAreaSection/RightAreaSection";
 import { HttpService } from "@/lib/modules/http/service";
 import { toast } from "sonner";
+import { getUserToken } from "@/app/(auth)/sign-in/page";
 
 interface Props {
     callDetails: CallData;
@@ -108,7 +109,21 @@ export const CallDetailPage = ({ callDetails }: Props) => {
 
             //Backend
             const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/input`;
-            const response = await httpService.post(uri, { input_buttons_data: bodyRequest, call_id: callId });
+            // const uri2 = 'https://abgdcx.aws.com/call_details/input';
+            // const uri3 = 'https://abgdcx.aws.com/base_url/call_details/input';
+            // const uri4 = 'https://abgdcx.aws.com/call_now/call_details/input';
+            // const uri5 = 'https://abgdcx.aws.com/call_now/base_url/call_details/input';
+
+            
+            const body = {
+                input_buttons_data: bodyRequest,
+                call_id: callId
+            };
+
+            console.log('uri: ', uri);
+            console.log('body: ', body);
+            
+            const response = await httpService.post(uri, body);
             console.log(response);
         }
         catch(e){
@@ -116,16 +131,21 @@ export const CallDetailPage = ({ callDetails }: Props) => {
         }
     }
 
-    const handleButtonClick = (buttonId: string) => {
-        const data = {
-            token: "",
+    const handleButtonClick = (buttonId: string, option: string) => {
+        const body = {
+            token: getUserToken(),
             call_id: callDetails.id,
             info_button_id: buttonId
         };
-
+        
+        
         toast.promise(async () => {
-            const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/info`;
-            const response = await httpService.post(uri, data)
+            const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/${option}`;
+            
+            console.log('uri: ', uri);
+            console.log('body: ', body);
+
+            const response = await httpService.post(uri, body)
             if(!response){
                 throw new Error(`Error call details: ${response}`);
             }
@@ -139,7 +159,7 @@ export const CallDetailPage = ({ callDetails }: Props) => {
     function formatFormData(data: RowElements[]){
         let result = {};
         data.forEach(Row => {
-            if(Row.key_name && Row.value){
+            if(Row.key_name){
                 result = { ...result, [Row.key_name]: Row.value };
             }
         });

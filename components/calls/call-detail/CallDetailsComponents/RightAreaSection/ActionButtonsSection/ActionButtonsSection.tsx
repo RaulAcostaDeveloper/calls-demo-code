@@ -3,7 +3,7 @@ import './ActionButtonsSection.css';
 
 interface Props {
     buttons?: ActionButtonSection[];
-    handleButtonClick: (buttonId: string) => void;
+    handleButtonClick: (buttonId: string, option: string) => void;
 }
 
 export const ActionButtonsSection = ({ buttons, handleButtonClick }: Props) => {
@@ -19,7 +19,7 @@ export const ActionButtonsSection = ({ buttons, handleButtonClick }: Props) => {
                                 {rowsArray.map((elements, index) => (
                                     <div key={index + row.title} className="buttonsRow">
                                         {elements.map((buttons, index) => (
-                                            <button onClick={() => handleButtonClick(buttons.id)}>{buttons.display_text}</button>
+                                            <button onClick={() => handleButtonClick(buttons.id, 'action')}>{buttons.display_text}</button>
                                         ))}
                                     </div>
                                 ))}

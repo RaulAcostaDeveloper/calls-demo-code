@@ -8,7 +8,7 @@ import './RightAreaSection.css';
 interface Props {
     callDetails: CallData;
     handleSaveForm: (data: RowElements[]) => void;
-    handleButtonClick: (buttonId: string) => void;
+    handleButtonClick: (buttonId: string, option: string) => void;
 }
 
 export const RightAreaSection = ({ callDetails, handleSaveForm, handleButtonClick }: Props) => {
