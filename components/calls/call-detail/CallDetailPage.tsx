@@ -36,6 +36,8 @@ export const CallDetailPage = ({ callDetails }: Props) => {
     const [locationsMap, setLocationsMap] = useState<{ [key: string]: any }>({});
     const [userLocation, setUserLocation] = useState('');
     const [callFormatedDate, setCallFormatedDate] = useState('');
+    const [timezone, setTimezone] = useState('');
+
     const { userDetails } = useAuth();
 
     useEffect(() => {
@@ -60,6 +62,7 @@ export const CallDetailPage = ({ callDetails }: Props) => {
             });
 
             const locationsMapObj = permittedLocations.reduce((acc, loc) => {
+                setTimezone(loc.timezone)
                 acc[loc.id] = loc.display_name;
                 return acc;
             }, {} as { [key: string]: string });
@@ -131,7 +134,8 @@ export const CallDetailPage = ({ callDetails }: Props) => {
                 location={userLocation}
                 callDate={callFormatedDate}
                 callStartTime={callDetails.call_start_time}
-                instructionLabels={callDetails.instruction_labels} />
+                instructionLabels={callDetails.instruction_labels} 
+                timezone={timezone}/>
             <div className="bottomArea">
                 <FocusAreaSection focusAreaSection={callDetails.focus_area_section} />
                 <RightAreaSection

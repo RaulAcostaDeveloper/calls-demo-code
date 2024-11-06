@@ -1,9 +1,10 @@
 'use client'
+import { FocusAreaSectionModel } from '../../CallDetail.model';
 import './FocusAreaSection.css';
 import { InformationFocusArea } from './InformationFocusArea';
 
 interface Props {
-    focusAreaSection: any[] | undefined;
+    focusAreaSection?: FocusAreaSectionModel[];
 }
 
 export const FocusAreaSection = ({ focusAreaSection }: Props) => {

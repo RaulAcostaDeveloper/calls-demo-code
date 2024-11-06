@@ -75,13 +75,13 @@ export const FormSection = ({ inputButtonsData, inputButtonsSchema, handleSaveFo
                             {element.type === "text_field_short" &&
                                 <div className="inputForm">
                                     <span>{element.display_text}</span>
-                                    <input value={`${element.value ? element.value : '' }`} type="text" onChange={(e) => handleChangeText(index, e.target.value)} />
+                                    <input maxLength={1024} value={`${element.value ? element.value : '' }`} type="text" onChange={(e) => handleChangeText(index, e.target.value)} />
                                 </div>
                             }
                             {element.type === "text_field_long" &&
                                 <div className="inputForm">
                                     <span>{element.display_text}</span>
-                                    <textarea value={`${element.value ? element.value : '' }`} onChange={(e) => handleChangeText(index, e.target.value)} />
+                                    <textarea maxLength={1024} value={`${element.value ? element.value : '' }`} onChange={(e) => handleChangeText(index, e.target.value)} />
                                 </div>
                             }
                         </div>
