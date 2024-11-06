@@ -34,6 +34,7 @@ import {
 import { BsBuildings } from "react-icons/bs";
 import { useAudio } from "./audio-context";
 import './tymeline-styles.css';
+import { HttpService } from "@/lib/modules/http/service";
 
 type CallCardProps = {
   call: DocumentData;
@@ -111,28 +112,21 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
     }
   };
 
-  const callNowUrl = `${process.env.NEXT_PUBLIC_CALLS_URL}?location_id=${call.location_id}&phone_number=${call.phone_number}`;
-
   function handleCallNow() {
-    toast.promise(
-      fetch(callNowUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Failed to call now");
-        }
-      }),
-      {
-        loading: "Calling now...",
-        success: "Call initiated successfully",
-        error: "Failed to initiate call",
+    const httpService = new HttpService();
+    const callNowUrl = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_now?location_id=${call.location_id}&phone_number=${call.phone_number}`;
+
+    toast.promise(async() => {
+      const response = await httpService.post(callNowUrl);
+      if(!response){
+        throw new Error("Failed to call now");
       }
-    );
+    },
+    {
+      loading: "Calling now...",
+      success: "Call initiated successfully",
+      error: "Failed to initiate call",
+    })
   }
 
   const formatPhoneNumber = (phoneNumber: string) => {
