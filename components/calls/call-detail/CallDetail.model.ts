@@ -14,7 +14,7 @@ export interface CallData {
   last_update_time_utc?: number;
   transcript_summary?: string;
   instruction_labels?: string[];
-  focus_area_section?: FocusAreaSection[];
+  focus_area_section?: FocusAreaSectionModel[];
   full_transcript?: string[];
   call_start_time_utc?: number;
   call_length_in_seconds?: number;
@@ -56,7 +56,7 @@ interface ActionButton {
 }
 
 
-interface FocusAreaSection {
+export interface FocusAreaSectionModel {
   html: string;
   title: string;
 }

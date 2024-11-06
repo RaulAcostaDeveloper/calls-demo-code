@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import './Header.css';
+import { useAuth } from "@/providers/auth-provider";
+
 
 interface Props {
-    phoneNumber?: string | undefined;
-    location?: string | undefined;
-    callDate?: string | undefined;
-    callStartTime?: string | undefined;
-    instructionLabels?: string[] | undefined;
+    phoneNumber?: string;
+    location?: string;
+    callDate?: string;
+    callStartTime?: string;
+    instructionLabels?: string[];
+    timezone?: string;
 }
 
 const formatPhoneNumber = (phoneNumber: string) => {
@@ -79,10 +82,11 @@ function extractTimeParts(timeString: string): { time: string; period: string; z
     return { time, period, zone };
 }
 
-export const Header = ({ phoneNumber, location, callDate, callStartTime, instructionLabels }: Props) => {
+export const Header = ({ phoneNumber, location, callDate, callStartTime, instructionLabels, timezone }: Props) => {
     const [time, setTime] = useState('');
     const [period, setPeriod] = useState('');
     const [zone, setZone] = useState('');
+    const { userDetails } = useAuth();
 
     useEffect(() => {
         if (callStartTime) {
@@ -129,10 +133,10 @@ export const Header = ({ phoneNumber, location, callDate, callStartTime, instruc
                     )}
                     {callStartTime && (
                         <div className='callStartTime'>
-                            {(time && period && zone) ? (
+                            {(time && period) ? (
                                 <>
                                     <div className='timeAndPeriod'>{time} {period} </div>
-                                    <div className='zone'>{zone}</div>
+                                    <div className='zone'>{timezone? timezone : zone}</div>
                                 </>
                             ) : (
                                 <>{callStartTime}</>
