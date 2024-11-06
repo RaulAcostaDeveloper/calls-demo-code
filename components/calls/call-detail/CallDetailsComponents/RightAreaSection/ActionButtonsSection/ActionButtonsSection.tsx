@@ -14,16 +14,20 @@ export const ActionButtonsSection = ({ buttons, handleButtonClick }: Props) => {
                     {buttons.map((row, index) => {
                         const rowsArray = Object.values(row.rows);
                         return (
-                            <>
+                            <div key={index + row.title + index}>
                                 <h2 className="titleRow">{row.title}</h2>
                                 {rowsArray.map((elements, index) => (
                                     <div key={index + row.title} className="buttonsRow">
                                         {elements.map((buttons, index) => (
-                                            <button onClick={() => handleButtonClick(buttons.id, 'action')}>{buttons.display_text}</button>
+                                            <button 
+                                                key={index + buttons.display_text} 
+                                                onClick={() => handleButtonClick(buttons.id, 'action')}>
+                                                    {buttons.display_text}
+                                            </button>
                                         ))}
                                     </div>
                                 ))}
-                            </>
+                            </div>
                         )
                     })}
                 </>
