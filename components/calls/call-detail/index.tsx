@@ -16,11 +16,7 @@ export default function CallDetailConnector() {
     const fetchCallDetails = async () => {
       setIsLoading(true);
 
-      const collectionName = process.env.NEXT_PUBLIC_CALLS_COLLECTION_NAME;
-      if (!collectionName) {
-        console.error("Collection name is not defined");
-        return;
-      }
+      const collectionName = process.env.NEXT_PUBLIC_CALLS_COLLECTION_NAME || '';
 
       try {
         const callDocRef = doc(db, collectionName, callId.toString()); // use callId as document ID

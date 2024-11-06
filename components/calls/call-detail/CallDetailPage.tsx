@@ -1,16 +1,20 @@
-'use client'
+"use client"
 import { useEffect, useState } from "react";
 import { db } from "@/lib/firebaseClient";
 import { hasAccessToLocation, useAuth } from "@/providers/auth-provider";
 import {
     collection,
+    doc,
+    getDoc,
     getDocs,
+    updateDoc,
 } from "firebase/firestore";
 import { CallData, RowElements } from "./CallDetail.model"
 import { Header } from "./CallDetailsComponents/Header/Header";
 import './CallDetailStyle.css';
 import { FocusAreaSection } from "./CallDetailsComponents/FocusAreaSection/FocusAreaSection";
 import { RightAreaSection } from "./CallDetailsComponents/RightAreaSection/RightAreaSection";
+import { HttpService } from "@/lib/modules/http/service";
 
 interface Props {
     callDetails: CallData;
@@ -80,14 +84,44 @@ export const CallDetailPage = ({ callDetails }: Props) => {
         }
     }, [callDetails.location_id, locationsMap]);
 
-    const handleSaveForm = (data: RowElements[]) => {
-        // SEND DATA FORM
-        console.log('extractedArray: ', data);
+    const handleSaveForm = async(data: RowElements[]) => {
+        const callId: string = callDetails.id || "";
+        const collectionName = process.env.NEXT_PUBLIC_CALLS_COLLECTION_NAME || '';
+        const bodyRequest = formatFormData(data);
+
+        //fire-store
+        const callDocRef = doc(db, collectionName, callId);
+        const callSnapshot: any = await getDoc(callDocRef);
+
+        if (!callSnapshot.exists()) {
+            console.log('Call-detail not found')
+          return;
+        } 
+
+        await updateDoc(callDocRef, {
+            input_buttons_data: bodyRequest
+        });
+
+        //Backend
+        const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/input}`;
+        const httpService = new HttpService();
+        const response = await httpService.post(uri, { input_buttons_data: bodyRequest, call_id: callId });
+        console.log(response);
     }
 
     const handleButtonClick = (buttonId: string) => {
         // SEND BUTTON ACTION
         console.log('buttonId has been clicked: ', buttonId);
+    }
+
+    function formatFormData(data: RowElements[]){
+        let result = {};
+        data.forEach(Row => {
+            if(Row.key_name && Row.value){
+                result = { ...result, [Row.key_name]: Row.value };
+            }
+        });
+        return result;
     }
 
     return (
