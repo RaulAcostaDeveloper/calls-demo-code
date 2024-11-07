@@ -86,7 +86,6 @@ export const Header = ({ phoneNumber, location, callDate, callStartTime, instruc
     const [time, setTime] = useState('');
     const [period, setPeriod] = useState('');
     const [zone, setZone] = useState('');
-    const { userDetails } = useAuth();
 
     useEffect(() => {
         if (callStartTime) {

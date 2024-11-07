@@ -90,48 +90,36 @@ export const CallDetailPage = ({ callDetails }: Props) => {
     }, [callDetails.location_id, locationsMap]);
 
     const handleSaveForm = async(data: RowElements[]) => {
+        // This is the FORM service
+        // Delete logs when service is working
         try{
             const callId: string = callDetails.id || "";
             const bodyRequest = formatFormData(data);
-
-            //fire-store
-            // const callDocRef = doc(db, collectionName, callId);
-            // const callSnapshot: any = await getDoc(callDocRef);
-
-            // if (!callSnapshot.exists()) {
-            //     console.log('Call-detail not found')
-            // return;
-            // } 
-
-            // await updateDoc(callDocRef, {
-            //     input_buttons_data: bodyRequest
-            // });
-
-            //Backend
+            const body = {
+                input_buttons_data: bodyRequest,
+                call_id: callId
+            };
             const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/input`;
+            // uri options
             // const uri2 = 'https://abgdcx.aws.com/call_details/input';
             // const uri3 = 'https://abgdcx.aws.com/base_url/call_details/input';
             // const uri4 = 'https://abgdcx.aws.com/call_now/call_details/input';
             // const uri5 = 'https://abgdcx.aws.com/call_now/base_url/call_details/input';
 
-            
-            const body = {
-                input_buttons_data: bodyRequest,
-                call_id: callId
-            };
-
-            console.log('uri: ', uri);
-            console.log('body: ', body);
+            console.log('FORM ACTION URI: ', uri);
+            console.log('FORM ACTION BODY: ', body);
             
             const response = await httpService.post(uri, body);
             console.log(response);
         }
         catch(e){
-            console.log(e);
+            console.error('error: ', e);
         }
     }
 
     const handleButtonClick = (buttonId: string, option: string) => {
+        // This are the BUTTONS service
+        // Delete logs when service is working
         const body = {
             token: getUserToken(),
             call_id: callDetails.id,
@@ -141,9 +129,8 @@ export const CallDetailPage = ({ callDetails }: Props) => {
         
         toast.promise(async () => {
             const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/${option}`;
-            
-            console.log('uri: ', uri);
-            console.log('body: ', body);
+            console.log('BUTTON ACTION URI: ', uri);
+            console.log('BUTTON ACTION BODY: ', body);
 
             const response = await httpService.post(uri, body)
             if(!response){
