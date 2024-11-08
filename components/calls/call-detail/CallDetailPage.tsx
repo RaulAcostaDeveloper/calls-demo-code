@@ -159,7 +159,6 @@ export const CallDetailPage = ({ callDetails }: Props) => {
                 phoneNumber={callDetails.phone_number}
                 location={userLocation}
                 callDate={callFormatedDate}
-                callStartTime={callDetails.call_start_time}
                 instructionLabels={callDetails.instruction_labels} 
                 timezone={timezone}/>
             <div className="bottomArea">

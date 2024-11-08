@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import './Header.css';
-import { useAuth } from "@/providers/auth-provider";
-
 
 interface Props {
     phoneNumber?: string;
     location?: string;
     callDate?: string;
-    callStartTime?: string;
     instructionLabels?: string[];
     timezone?: string;
 }
@@ -26,84 +23,28 @@ const formatPhoneNumber = (phoneNumber: string) => {
     }
 }
 
-function extractTimeParts(timeString: string): { time: string; period: string; zone: string } | null {
-    const timeMatch = timeString.match(/(\d{1,2}:\d{2})(AM|PM)\s+(.*)/);
-
-    if (!timeMatch) {
-        console.error("Call start time format is not valid");
-        return null;
-    }
-
-    const [, time, period, zoneAbbreviation] = timeMatch;
-
-    let zone = "";
-    // Add new time zones here
-    switch (zoneAbbreviation) {
-        case "CT":
-            zone = "Central";
-            break;
-        case "ET":
-            zone = "Eastern";
-            break;
-        case "PT":
-            zone = "Pacific";
-            break;
-        case "MT":
-            zone = "Mountain";
-            break;
-        case "GMT":
-            zone = "Greenwich Mean Time";
-            break;
-        case "UTC":
-            zone = "Coordinated Universal Time";
-            break;
-        case "BST":
-            zone = "British Summer Time";
-            break;
-        case "CET":
-            zone = "Central European Time";
-            break;
-        case "IST":
-            zone = "India Standard Time";
-            break;
-        case "JST":
-            zone = "Japan Standard Time";
-            break;
-        case "AEDT":
-            zone = "Australian Eastern Daylight Time";
-            break;
-        case "AEST":
-            zone = "Australian Eastern Standard Time";
-            break;
-        default:
-            zone = zoneAbbreviation;
-    }
-
-    return { time, period, zone };
-}
-
-export const Header = ({ phoneNumber, location, callDate, callStartTime, instructionLabels, timezone }: Props) => {
-    const [time, setTime] = useState('');
-    const [period, setPeriod] = useState('');
-    const [zone, setZone] = useState('');
+export const Header = ({ phoneNumber, location, callDate, instructionLabels, timezone }: Props) => {
+    const [currentTime, setCurrentTime] = useState('');
 
     useEffect(() => {
-        if (callStartTime) {
-            const result = extractTimeParts(callStartTime);
+        if (typeof window !== 'undefined') {
+            const updateTime = () => {
+                const now = new Date();
+                const formattedTime = now.toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                });
+                setCurrentTime(formattedTime);
+            };
 
-            if (result?.time) {
-                setTime(result.time);
-            }
+            updateTime();
 
-            if (result?.period) {
-                setPeriod(result.period);
-            }
+            const interval = setInterval(updateTime, 1000);
 
-            if (result?.zone) {
-                setZone(result.zone);
-            }
+            return () => clearInterval(interval);
         }
-    }, [callStartTime]);
+    }, []);
 
     const copyContent = async (text: string) => {
         if (typeof navigator !== "undefined") {
@@ -116,7 +57,7 @@ export const Header = ({ phoneNumber, location, callDate, callStartTime, instruc
             <div className='topHeader'>
                 <div className='float'>
                     {phoneNumber && (
-                        <button className='phoneNumber' onClick={()=> copyContent(phoneNumber)}>
+                        <button className='phoneNumber' onClick={() => copyContent(phoneNumber)}>
                             {formatPhoneNumber(phoneNumber)}
                             <Image src={'/assets/copyIcon.png'} width={30} height={30} alt='copy icon' />
                         </button>
@@ -125,21 +66,15 @@ export const Header = ({ phoneNumber, location, callDate, callStartTime, instruc
                         <div className='location'>{location}</div>
                     )}
                 </div>
-                
+
                 <div className='float'>
                     {callDate && (
                         <div className='callDate'>{callDate}</div>
                     )}
-                    {callStartTime && (
+                    {currentTime && (
                         <div className='callStartTime'>
-                            {(time && period) ? (
-                                <>
-                                    <div className='timeAndPeriod'>{time} {period} </div>
-                                    <div className='zone'>{timezone? timezone : zone}</div>
-                                </>
-                            ) : (
-                                <>{callStartTime}</>
-                            )}
+                            <div className='timeAndPeriod'>{currentTime} </div>
+                            <div className='zone'>{timezone}</div>
                         </div>
                     )}
                 </div>
