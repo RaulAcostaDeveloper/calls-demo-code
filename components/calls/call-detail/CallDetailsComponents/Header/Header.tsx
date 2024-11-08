@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { toast } from "sonner";
 import './Header.css';
@@ -9,6 +9,7 @@ interface Props {
     callDate?: string;
     instructionLabels?: string[];
     timezone?: string;
+    setHeaderHeight: (height: number) => void;
 }
 
 const formatPhoneNumber = (phoneNumber: string) => {
@@ -24,8 +25,32 @@ const formatPhoneNumber = (phoneNumber: string) => {
     }
 }
 
-export const Header = ({ phoneNumber, location, callDate, instructionLabels, timezone }: Props) => {
+export const Header = ({ phoneNumber, location, callDate, instructionLabels, timezone, setHeaderHeight }: Props) => {
     const [currentTime, setCurrentTime] = useState('');
+    const headerRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        const updateHeight = () => {
+            if (headerRef.current) {
+                setHeaderHeight(headerRef.current.offsetHeight);
+                console.log('Updated height:', headerRef.current.offsetHeight);
+            }
+        };
+    
+        const observer = new ResizeObserver(updateHeight);
+    
+        if (headerRef.current) {
+            setTimeout(() => {
+                observer.observe(headerRef.current as HTMLDivElement);
+            }, 0);
+        }
+    
+        return () => {
+            if (headerRef.current) {
+                observer.unobserve(headerRef.current);
+            }
+        };
+    }, []);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -55,7 +80,7 @@ export const Header = ({ phoneNumber, location, callDate, instructionLabels, tim
     }
 
     return (
-        <div className="callDetailHeaderStyle">
+        <div className="callDetailHeaderStyle" ref={headerRef}>
             <div className='topHeader'>
                 <div className='float'>
                     {phoneNumber && (

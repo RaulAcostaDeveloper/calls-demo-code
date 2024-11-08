@@ -39,6 +39,7 @@ export const CallDetailPage = ({ callDetails }: Props) => {
     const [userLocation, setUserLocation] = useState('');
     const [callFormatedDate, setCallFormatedDate] = useState('');
     const [timezone, setTimezone] = useState('');
+    const [headerHeight, setHeaderHeight] = useState(0);
     const { userDetails } = useAuth();
     const httpService = new HttpService();
 
@@ -173,8 +174,10 @@ export const CallDetailPage = ({ callDetails }: Props) => {
                 location={userLocation}
                 callDate={callFormatedDate}
                 instructionLabels={callDetails.instruction_labels}
-                timezone={timezone} />
-            <div className="bottomArea">
+                timezone={timezone}
+                setHeaderHeight={setHeaderHeight} />
+
+            <div className="bottomArea" style={{ marginTop: `${headerHeight}px` }}>
                 <FocusAreaSection focusAreaSection={callDetails.focus_area_section} />
                 <RightAreaSection
                     callDetails={callDetails}
