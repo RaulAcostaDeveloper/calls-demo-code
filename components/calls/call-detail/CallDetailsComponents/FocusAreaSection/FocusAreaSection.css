@@ -32,9 +32,19 @@
                 height: 13px;
             }
         }
+
         /* Style for not specific html here */
         .noSpecificHtml {
             margin-top: 20px;
+            ol {
+                list-style: decimal;
+                margin-left: 1.5rem;
+                padding-left: 0;
+                li {
+                    text-align: left;
+                    margin: 0.5rem 0;
+                  }
+            }
         }
     }
 }
