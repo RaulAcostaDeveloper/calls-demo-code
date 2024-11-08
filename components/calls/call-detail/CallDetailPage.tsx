@@ -15,7 +15,7 @@ import './CallDetailStyle.css';
 import { FocusAreaSection } from "./CallDetailsComponents/FocusAreaSection/FocusAreaSection";
 import { RightAreaSection } from "./CallDetailsComponents/RightAreaSection/RightAreaSection";
 import { HttpService } from "@/lib/modules/http/service";
-import { toast } from "sonner";
+import { Toaster, toast } from "sonner";
 import { getUserToken } from "@/app/(auth)/sign-in/page";
 
 interface Props {
@@ -89,10 +89,10 @@ export const CallDetailPage = ({ callDetails }: Props) => {
         }
     }, [callDetails.location_id, locationsMap]);
 
-    const handleSaveForm = async(data: RowElements[]) => {
+    const handleSaveForm = async (data: RowElements[]) => {
         // This is the FORM service
         // Delete logs when service is working
-        try{
+        try {
             const callId: string = callDetails.id || "";
             const bodyRequest = formatFormData(data);
             const body = {
@@ -108,11 +108,11 @@ export const CallDetailPage = ({ callDetails }: Props) => {
 
             console.log('FORM ACTION URI: ', uri);
             console.log('FORM ACTION BODY: ', body);
-            
+
             const response = await httpService.post(uri, body);
             console.log(response);
         }
-        catch(e){
+        catch (e) {
             console.error('error: ', e);
         }
     }
@@ -125,15 +125,15 @@ export const CallDetailPage = ({ callDetails }: Props) => {
             call_id: callDetails.id,
             info_button_id: buttonId
         };
-        
-        
+
+
         toast.promise(async () => {
             const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/${option}`;
             console.log('BUTTON ACTION URI: ', uri);
             console.log('BUTTON ACTION BODY: ', body);
 
             const response = await httpService.post(uri, body)
-            if(!response){
+            if (!response) {
                 throw new Error(`Error call details: ${response}`);
             }
         }, {
@@ -143,10 +143,10 @@ export const CallDetailPage = ({ callDetails }: Props) => {
         });
     }
 
-    function formatFormData(data: RowElements[]){
+    function formatFormData(data: RowElements[]) {
         let result = {};
         data.forEach(Row => {
-            if(Row.key_name){
+            if (Row.key_name) {
                 result = { ...result, [Row.key_name]: Row.value };
             }
         });
@@ -155,12 +155,25 @@ export const CallDetailPage = ({ callDetails }: Props) => {
 
     return (
         <div className="callDetailPageStyle">
+            <Toaster
+                position="top-right"
+                richColors
+                toastOptions={{
+                    style: {
+                        fontSize: "20px",
+                        background: "#333",
+                        color: "#fff",
+                        borderRadius: "8px",
+                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    },
+                }}
+            />
             <Header
                 phoneNumber={callDetails.phone_number}
                 location={userLocation}
                 callDate={callFormatedDate}
-                instructionLabels={callDetails.instruction_labels} 
-                timezone={timezone}/>
+                instructionLabels={callDetails.instruction_labels}
+                timezone={timezone} />
             <div className="bottomArea">
                 <FocusAreaSection focusAreaSection={callDetails.focus_area_section} />
                 <RightAreaSection

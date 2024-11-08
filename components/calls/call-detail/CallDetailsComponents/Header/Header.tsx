@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { toast } from "sonner";
 import './Header.css';
 
 interface Props {
@@ -49,6 +50,7 @@ export const Header = ({ phoneNumber, location, callDate, instructionLabels, tim
     const copyContent = async (text: string) => {
         if (typeof navigator !== "undefined") {
             await navigator.clipboard.writeText(text);
+            toast.success("Copied " + text);
         }
     }
 
