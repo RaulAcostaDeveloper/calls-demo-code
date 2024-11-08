@@ -1,7 +1,10 @@
 .callDetailHeaderStyle {
     background-color: #E1E1E1;
     padding: 15px;
-    border-radius: 10px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 2;
     .topHeader {
         display: flex;
         flex-wrap: wrap;

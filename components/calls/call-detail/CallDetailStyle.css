@@ -3,5 +3,56 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+        z-index: 1;
+        margin-top: 160px;
+    }
+}
+
+.sidebarDetailsPage {
+    display: none;
+}
+
+.callDetailsPageLayout {
+    width: 100vw;
+    margin: 0;
+}
+
+@media (max-width: 1024px) {
+    .callDetailPageStyle {
+        .bottomArea {
+            margin-top: 240px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .callDetailPageStyle {
+        .bottomArea {
+            margin-top: 220px;
+        }
+    }
+}
+
+@media (max-width: 425px) {
+    .callDetailPageStyle {
+        .bottomArea {
+            margin-top: 390px;
+        }
+    }
+}
+
+@media (max-width: 375px) {
+    .callDetailPageStyle {
+        .bottomArea {
+            margin-top: 430px;
+        }
+    }
+}
+
+@media (max-width: 320px) {
+    .callDetailPageStyle {
+        .bottomArea {
+            margin-top: 410px;
+        }
     }
 }
