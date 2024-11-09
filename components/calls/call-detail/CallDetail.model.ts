@@ -10,7 +10,7 @@ export interface CallData {
   input_buttons_schema?: InputButtonSchema[];
   action_buttons_section?: ActionButtonSection[];
   location_id?: string;
-  input_buttons_data?: (string | boolean)[];
+  input_buttons_data?: Record<string, string | boolean>;
   last_update_time_utc?: number;
   transcript_summary?: string;
   instruction_labels?: string[];
