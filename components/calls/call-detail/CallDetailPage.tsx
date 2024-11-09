@@ -16,7 +16,6 @@ import { FocusAreaSection } from "./CallDetailsComponents/FocusAreaSection/Focus
 import { RightAreaSection } from "./CallDetailsComponents/RightAreaSection/RightAreaSection";
 import { HttpService } from "@/lib/modules/http/service";
 import { Toaster, toast } from "sonner";
-import { getUserToken } from "@/app/(auth)/sign-in/page";
 
 interface Props {
     callDetails: CallData;
@@ -40,7 +39,7 @@ export const CallDetailPage = ({ callDetails }: Props) => {
     const [callFormatedDate, setCallFormatedDate] = useState('');
     const [timezone, setTimezone] = useState('');
     const [headerHeight, setHeaderHeight] = useState(0);
-    const { userDetails } = useAuth();
+    const { userDetails, user } = useAuth();
     const httpService = new HttpService();
 
     useEffect(() => {
@@ -120,30 +119,34 @@ export const CallDetailPage = ({ callDetails }: Props) => {
         }
     }
 
-    const handleButtonClick = (buttonId: string, option: string) => {
+    const handleActionButtonClick = (id: string) => {}
+
+    const handleInfoButtonClick = (id: string) => {}
+
+    const handleButtonClick = () => {
         // This are the BUTTONS service
         // Delete logs when service is working
-        const body = {
-            token: getUserToken(),
-            call_id: callDetails.id,
-            info_button_id: buttonId
-        };
+        // const body = {
+        //     token: getUserToken(),
+        //     call_id: callDetails.id,
+        //     info_button_id: buttonId
+        // };
 
 
-        toast.promise(async () => {
-            const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/${option}`;
-            console.log('BUTTON ACTION URI: ', uri);
-            console.log('BUTTON ACTION BODY: ', body);
+        // toast.promise(async () => {
+        //     const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/${option}`;
+        //     console.log('BUTTON ACTION URI: ', uri);
+        //     console.log('BUTTON ACTION BODY: ', body);
 
-            const response = await httpService.post(uri, body)
-            if (!response) {
-                throw new Error(`Error call details: ${response}`);
-            }
-        }, {
-            loading: "Call details fetchin...",
-            success: "Call details founded",
-            error: "Call details error",
-        });
+        //     const response = await httpService.post(uri, body)
+        //     if (!response) {
+        //         throw new Error(`Error call details: ${response}`);
+        //     }
+        // }, {
+        //     loading: "Call details fetchin...",
+        //     success: "Call details founded",
+        //     error: "Call details error",
+        // });
     }
 
     function formatFormData(data: RowElements[]) {
