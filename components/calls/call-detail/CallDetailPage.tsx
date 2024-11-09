@@ -65,7 +65,9 @@ export const CallDetailPage = ({ callDetails }: Props) => {
             });
 
             const locationsMapObj = permittedLocations.reduce((acc, loc) => {
-                setTimezone(loc.timezone)
+                if (loc.id === callDetails.location_id) {
+                    setTimezone(loc.timezone)
+                }
                 acc[loc.id] = loc.display_name;
                 return acc;
             }, {} as { [key: string]: string });

@@ -33,7 +33,6 @@ export const Header = ({ phoneNumber, location, callDate, instructionLabels, tim
         const updateHeight = () => {
             if (headerRef.current) {
                 setHeaderHeight(headerRef.current.offsetHeight);
-                console.log('Updated height:', headerRef.current.offsetHeight);
             }
         };
     
