@@ -8,49 +8,64 @@
         display: flex;
         flex-wrap: wrap;
 
-        .clickeableButton {
-            border: 1px solid black;
-            color: #15192C;
-            border-radius: 6px;
-            padding: 12px 8px;
-            font-size: 12px;
-            font-weight: 500;
-            margin-right: 10px;
+        .title {
+            width: 100%;
+            text-align: left;
+            font-weight: 600;
+            font-size: 16px;
             margin-bottom: 20px;
         }
 
-        .buttonSelected {
-            background-color: #212121;
-            color: white;
-        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
 
-        .inputForm {
-            position: relative;
-
-            span {
+            .clickeableButton {
+                border: 1px solid black;
+                color: #15192C;
+                border-radius: 6px;
+                padding: 12px 8px;
                 font-size: 12px;
-                background-color: white;
-                position: absolute;
-                top: -10px;
-                left: 28px;
-                padding: 0 5px;
+                font-weight: 500;
+                margin-right: 10px;
+                margin-bottom: 20px;
             }
-
-            input {
-                border: 1px solid #212121;
-                border-radius: 7px;
-                height: 48px;
-                width: 400px;
-                margin-bottom: 18px;
-                padding: 5px;
+    
+            .buttonSelected {
+                background-color: #212121;
+                color: white;
             }
-
-            textarea {
-                border: 1px solid #212121;
-                border-radius: 7px;
-                width: 400px;
-                margin-bottom: 10px;
-                padding: 5px;
+    
+            .inputForm {
+                position: relative;
+    
+                span {
+                    font-size: 12px;
+                    background-color: white;
+                    position: absolute;
+                    top: -10px;
+                    left: 28px;
+                    padding: 0 5px;
+                }
+    
+                input {
+                    border: 1px solid #212121;
+                    border-radius: 7px;
+                    height: 48px;
+                    width: 400px;
+                    margin-bottom: 18px;
+                    padding: 5px;
+                }
+    
+                textarea {
+                    border: 1px solid #212121;
+                    border-radius: 7px;
+                    width: 400px;
+                    margin-bottom: 10px;
+                    padding: 5px;
+                }
             }
         }
 
