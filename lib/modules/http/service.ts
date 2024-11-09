@@ -1,34 +1,27 @@
+import axios, { AxiosInstance } from "axios";
+
 export class HttpService {
-    async get(uri: string){
-        const response = await this.request("GET", uri);
-        return response;
+    protected axiosConfig: AxiosInstance;
+
+    constructor(uri?: string, headers?: any){
+        const url = !uri ? process.env.URI_BACKEND : uri;
+
+        this.axiosConfig = axios.create({
+            baseURL: url,
+            headers: {
+                "Content-Type": "application/json",
+                ...headers
+            },
+            responseType: "json"
+        });
     }
 
     async post(uri: string, data?: any){
-        const response = await this.request("POST", uri, data);
-        return response;
-    }
-
-    private async request(
-        method: string,
-        uri: string,
-        data?: any
-    ): Promise<any>{
         try{
-            let options: RequestInit = {
-                method,
-                headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-            }
-
-            if(data){
-                options = { ...options, body: JSON.stringify(data) };
-            }
-
-            const response = await fetch(uri, options);
-            return await response.json();
+            return await this.axiosConfig.post(uri, data);
         }
-        catch(error){
-            console.log(`Fetch erro: ${error}`);
+        catch(e){
+            console.log(`Error al intentar hacer peticion http: ${e}`);
         }
     }
 }

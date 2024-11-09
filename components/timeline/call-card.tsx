@@ -35,6 +35,7 @@ import { BsBuildings } from "react-icons/bs";
 import { useAudio } from "./audio-context";
 import './tymeline-styles.css';
 import { HttpService } from "@/lib/modules/http/service";
+import { useAuth } from "@/providers/auth-provider";
 
 type CallCardProps = {
   call: DocumentData;
@@ -59,6 +60,7 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
   const [isShowingTranscript, setIsShowingTranscript] = useState(false);
 
   const { currentlyPlayingId, play, pause } = useAudio(); // Use the audio context
+  const { user } = useAuth();
 
   useEffect(() => {
     if (call.recording_url) {
@@ -112,12 +114,18 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
     }
   };
 
-  function handleCallNow() {
-    const httpService = new HttpService();
-    const callNowUrl = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_now?location_id=${call.location_id}&phone_number=${call.phone_number}`;
+  async function handleCallNow() {
+    const token = await user?.getIdToken();
+    const httpService = new HttpService(undefined, { 'x-api-key': `${token}` });
 
     toast.promise(async() => {
-      const response = await httpService.post(callNowUrl);
+      const response = await httpService.post('/action_request', {        
+        id: "",
+        call_id: call.id,
+        location_id: call.location_id,
+        phone_number: call.phone_number,
+        other_info: ""
+      });
       if(!response){
         throw new Error("Failed to call now");
       }
