@@ -18,24 +18,6 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import Image from "next/image";
 
-export const saveUserToken = (token: string) => {
-  if (typeof navigator !== "undefined") {
-    sessionStorage.setItem('userToken', token);
-  }
-};
-
-export const getUserToken = () => {
-  if (typeof navigator !== "undefined") {
-    return sessionStorage.getItem('userToken');
-  }
-};
-
-export const removeUserToken = () => {
-  if (typeof navigator !== "undefined") {
-    sessionStorage.removeItem('userToken');
-  }
-};
-
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,8 +38,6 @@ export default function Login() {
       );
       const idToken = await credential.user.getIdToken();
       
-      saveUserToken(idToken);
-
       await fetch("/api/login", {
         headers: {
           Authorization: `Bearer ${idToken}`,

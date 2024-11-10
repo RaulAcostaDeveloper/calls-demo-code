@@ -25,7 +25,6 @@ import { useAuth } from "@/providers/auth-provider";
 import { useFilterStore } from "@/stores/filter-store";
 import { getPaths } from "@/constants/path";
 import { useCallsFilterStore } from "@/stores/calls-filter-store";
-import { removeUserToken } from "@/app/(auth)/sign-in/page";
 
 type SidebarProps = {
   setOpen?: (open: boolean) => void;
@@ -40,7 +39,6 @@ export default function Sidebar() {
   const { fromDate, toDate, type } = useCallsFilterStore();
 
   async function handleLogout() {
-    removeUserToken();
     await signOut(getAuth(app));
     await fetch("/api/logout");
     router.push("/sign-in");

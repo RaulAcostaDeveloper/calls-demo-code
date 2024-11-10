@@ -118,23 +118,23 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
     const token = await user?.getIdToken();
     const httpService = new HttpService(undefined, { 'x-api-key': `${token}` });
 
-    toast.promise(async() => {
-      const response = await httpService.post('/action_request', {        
+    toast.promise(async () => {
+      const response = await httpService.post('/action_request', {
         id: "",
         call_id: call.id,
         location_id: call.location_id,
         phone_number: call.phone_number,
         other_info: ""
       });
-      if(!response){
+      if (!response) {
         throw new Error("Failed to call now");
       }
     },
-    {
-      loading: "Calling now...",
-      success: "Call initiated successfully",
-      error: "Failed to initiate call",
-    })
+      {
+        loading: "Calling now...",
+        success: "Call initiated successfully",
+        error: "Failed to initiate call",
+      })
   }
 
   const formatPhoneNumber = (phoneNumber: string) => {
@@ -182,16 +182,13 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
             <button className="callDetailsButton">Call details</button>
           </Link>
         </div>
-        {call.ongoing_call_status &&
-          (
-            <div className="guestLabelsContainer">
-              {call.guest_labels.map((el: string) => (
-                <div key={el} className="bigGuestLabels">
-                  {el}
-                </div>
-              ))}
+        <div className="guestLabelsContainer">
+          {call.guest_labels.map((el: string) => (
+            <div key={el} className="bigGuestLabels">
+              {el}
             </div>
-          )}
+          ))}
+        </div>
         <div className="guestLabelsContainer">
           {call.labels.map((el: string) => (
             <div key={el} className="smallGuestLabels">

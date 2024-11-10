@@ -12,6 +12,16 @@
         display: flex;
         margin-top: 20px;
 
+        .bigGuestLabels {
+            margin-right: 15px;
+            background-color: #212121;
+            color: white;
+
+            font-size: 20px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
         .smallGuestLabels {
             padding: 5px 10px;
             border-radius: 4px;
