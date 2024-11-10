@@ -16,6 +16,7 @@ import { FocusAreaSection } from "./CallDetailsComponents/FocusAreaSection/Focus
 import { RightAreaSection } from "./CallDetailsComponents/RightAreaSection/RightAreaSection";
 import { HttpService } from "@/lib/modules/http/service";
 import { Toaster, toast } from "sonner";
+import { getUserToken } from "@/app/(auth)/sign-in/page";
 
 interface Props {
     callDetails: CallData;
@@ -31,6 +32,16 @@ function formatDate(inputDate: string): string {
     };
 
     return date.toLocaleDateString("en-US", options);
+}
+
+function formatFormData(data: RowElements[]) {
+    let result = {};
+    data.forEach(Row => {
+        if (Row.key_name) {
+            result = { ...result, [Row.key_name]: Row.value };
+        }
+    });
+    return result;
 }
 
 export const CallDetailPage = ({ callDetails }: Props) => {
@@ -119,44 +130,50 @@ export const CallDetailPage = ({ callDetails }: Props) => {
         }
     }
 
-    const handleActionButtonClick = (id: string) => {}
+    const handleActionButtonClick = (id: string) => {
+        const body = {
+            token: getUserToken(),
+            call_id: callDetails.id,
+            info_button_id: id
+        };
 
-    const handleInfoButtonClick = (id: string) => {}
+        toast.promise(async () => {
+            const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/action`;
+            console.log('BUTTON ACTION URI: ', uri);
+            console.log('BUTTON ACTION BODY: ', body);
 
-    const handleButtonClick = () => {
-        // This are the BUTTONS service
-        // Delete logs when service is working
-        // const body = {
-        //     token: getUserToken(),
-        //     call_id: callDetails.id,
-        //     info_button_id: buttonId
-        // };
-
-
-        // toast.promise(async () => {
-        //     const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/${option}`;
-        //     console.log('BUTTON ACTION URI: ', uri);
-        //     console.log('BUTTON ACTION BODY: ', body);
-
-        //     const response = await httpService.post(uri, body)
-        //     if (!response) {
-        //         throw new Error(`Error call details: ${response}`);
-        //     }
-        // }, {
-        //     loading: "Call details fetchin...",
-        //     success: "Call details founded",
-        //     error: "Call details error",
-        // });
+            const response = await httpService.post(uri, body)
+            if (!response) {
+                throw new Error(`Error call details: ${response}`);
+            }
+        }, {
+            loading: "Call details fetchin...",
+            success: "Call details founded",
+            error: "Call details error",
+        });
     }
 
-    function formatFormData(data: RowElements[]) {
-        let result = {};
-        data.forEach(Row => {
-            if (Row.key_name) {
-                result = { ...result, [Row.key_name]: Row.value };
+    const handleInfoButtonClick = (id: string) => {
+        const body = {
+            token: getUserToken(),
+            call_id: callDetails.id,
+            info_button_id: id
+        };
+
+        toast.promise(async () => {
+            const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/info`;
+            console.log('BUTTON INFO URI: ', uri);
+            console.log('BUTTON INFO BODY: ', body);
+
+            const response = await httpService.post(uri, body)
+            if (!response) {
+                throw new Error(`Error call details: ${response}`);
             }
+        }, {
+            loading: "Call details fetchin...",
+            success: "Call details founded",
+            error: "Call details error",
         });
-        return result;
     }
 
     return (
@@ -187,7 +204,8 @@ export const CallDetailPage = ({ callDetails }: Props) => {
                 <RightAreaSection
                     callDetails={callDetails}
                     handleSaveForm={handleSaveForm}
-                    handleButtonClick={handleButtonClick} />
+                    handleActionButtonClick={handleActionButtonClick}
+                    handleInfoButtonClick={handleInfoButtonClick} />
             </div>
         </div>
     )

@@ -3,13 +3,13 @@ import './InfoButtonsSection.css';
 
 interface Props {
     buttons?: InfoButtonSection[];
-    handleButtonClick: (buttonId: string, option: string) => void;
+    handleInfoButtonClick: (buttonId: string) => void;
 }
 
-export const InfoButtonsSection = ({ buttons, handleButtonClick }: Props) => {
+export const InfoButtonsSection = ({ buttons, handleInfoButtonClick }: Props) => {
 
     const handleClickButton = (buttonId: string) => {
-        handleButtonClick(buttonId, 'info');
+        handleInfoButtonClick(buttonId);
     }
     
     return (

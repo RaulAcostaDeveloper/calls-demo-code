@@ -3,10 +3,10 @@ import './ActionButtonsSection.css';
 
 interface Props {
     buttons?: ActionButtonSection[];
-    handleButtonClick: (buttonId: string, option: string) => void;
+    handleActionButtonClick: (buttonId: string) => void;
 }
 
-export const ActionButtonsSection = ({ buttons, handleButtonClick }: Props) => {
+export const ActionButtonsSection = ({ buttons, handleActionButtonClick }: Props) => {
     return (
         <div className="actionButtonsSection">
             {buttons &&
@@ -21,7 +21,7 @@ export const ActionButtonsSection = ({ buttons, handleButtonClick }: Props) => {
                                         {elements.map((buttons, index) => (
                                             <button 
                                                 key={index + buttons.display_text} 
-                                                onClick={() => handleButtonClick(buttons.id, 'action')}>
+                                                onClick={() => handleActionButtonClick(buttons.id)}>
                                                     {buttons.display_text}
                                             </button>
                                         ))}

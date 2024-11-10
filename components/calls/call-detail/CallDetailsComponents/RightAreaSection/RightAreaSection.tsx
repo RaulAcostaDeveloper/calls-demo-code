@@ -8,10 +8,11 @@ import './RightAreaSection.css';
 interface Props {
     callDetails: CallData;
     handleSaveForm: (data: RowElements[]) => void;
-    handleButtonClick: (buttonId: string, option: string) => void;
+    handleActionButtonClick: (id: string) => void;
+    handleInfoButtonClick: (id: string) => void;
 }
 
-export const RightAreaSection = ({ callDetails, handleSaveForm, handleButtonClick }: Props) => {
+export const RightAreaSection = ({ callDetails, handleSaveForm, handleActionButtonClick, handleInfoButtonClick }: Props) => {
     return (
         <div className="rightAreaSection">
             <div className='inner'>
@@ -21,10 +22,10 @@ export const RightAreaSection = ({ callDetails, handleSaveForm, handleButtonClic
                     handleSaveForm={handleSaveForm} />
                 <InfoButtonsSection 
                     buttons={callDetails.info_buttons_section}
-                    handleButtonClick={handleButtonClick} />
+                    handleInfoButtonClick={handleInfoButtonClick} />
                 <ActionButtonsSection 
                     buttons={callDetails.action_buttons_section}
-                    handleButtonClick={handleButtonClick} />
+                    handleActionButtonClick={handleActionButtonClick} />
             </div>
         </div>
     )
