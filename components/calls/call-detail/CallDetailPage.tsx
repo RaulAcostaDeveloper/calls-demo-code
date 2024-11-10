@@ -14,10 +14,9 @@ import { Header } from "./CallDetailsComponents/Header/Header";
 import './CallDetailStyle.css';
 import { FocusAreaSection } from "./CallDetailsComponents/FocusAreaSection/FocusAreaSection";
 import { RightAreaSection } from "./CallDetailsComponents/RightAreaSection/RightAreaSection";
-import { HttpService } from "@/lib/modules/http/service";
-import { Toaster, toast } from "sonner";
-import { getUserToken } from "@/app/(auth)/sign-in/page";
-import axios from "axios";
+import { HttpService, postButtonsService } from "@/lib/modules/http/service";
+import { Toaster } from "sonner";
+import { ButtonsBodyService } from "@/lib/modules/http/services.model";
 
 interface Props {
     callDetails: CallData;
@@ -133,40 +132,20 @@ export const CallDetailPage = ({ callDetails }: Props) => {
 
     const handleActionButtonClick = async (id: string) => {
         const userToken = await user?.getIdToken();
-        const uri = `https://o22r9omtvk.execute-api.us-east-2.amazonaws.com/sumeet-R_1_10/action_request`;
-        const body = {
+        const uri = `action_request`;
+        const body: ButtonsBodyService = {
             id,
             call_id: callDetails.id,
             location_id: callDetails.location_id,
             phone_number: callDetails.phone_number,
             other_info: ""
         };
-        toast.promise(async () => {
-            try {
-                await axios.post(uri, body, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${userToken}`,
-                        'x-api-key': userToken
-                    }
-                });
-            } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    console.error('Axios Error:', error.response?.data || error.message);
-                } else {
-                    console.error('Unknown Error:', error);
-                }
-            }
-        }, {
-            loading: "Call details fetchin...",
-            success: "Call details founded",
-            error: "Call details error",
-        });
+        postButtonsService(uri, body, userToken);
     }
 
     const handleInfoButtonClick = async (id: string) => {
         const userToken = await user?.getIdToken();
-        const uri = `https://o22r9omtvk.execute-api.us-east-2.amazonaws.com/sumeet-R_1_10/info_request`;
+        const uri = `info_request`;
         const body = {
             id,
             call_id: callDetails.id,
@@ -174,31 +153,12 @@ export const CallDetailPage = ({ callDetails }: Props) => {
             phone_number: callDetails.phone_number,
             other_info: ""
         };
-        toast.promise(async () => {
-            try {
-                await axios.post(uri, body, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${userToken}`,
-                        'x-api-key': userToken
-                    }
-                });
-            } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    console.error('Axios Error:', error.response?.data || error.message);
-                } else {
-                    console.error('Unknown Error:', error);
-                }
-            }
-        }, {
-            loading: "Call details fetchin...",
-            success: "Call details founded",
-            error: "Call details error",
-        });
+        postButtonsService(uri, body, userToken);
     }
 
     return (
         <div className="callDetailPageStyle">
+            
             <Toaster
                 position="top-right"
                 richColors
@@ -212,6 +172,7 @@ export const CallDetailPage = ({ callDetails }: Props) => {
                     },
                 }}
             />
+
             <Header
                 phoneNumber={callDetails.phone_number}
                 location={userLocation}
