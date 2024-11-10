@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { toast } from "sonner";
-import { ButtonsBodyService } from "./services.model";
+import { ButtonsBodyService, FormBodyService } from "./services.model";
 
 export class HttpService {
     protected axiosConfig: AxiosInstance;
@@ -28,10 +28,34 @@ export class HttpService {
     }
 }
 
+export const postFormService = async (uri: string, body: FormBodyService, userToken?: string) => {
+    toast.promise(async () => {
+        try {
+            await axios.post(process.env.NEXT_PUBLIC_CALLS_URL + uri, body, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userToken}`,
+                    'x-api-key': userToken
+                }
+            });
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                console.error('Axios Error:', error.response?.data || error.message);
+            } else {
+                console.error('Unknown Error:', error);
+            }
+        }
+    }, {
+        loading: "Call details form fetchin...",
+        success: "Call details form success",
+        error: "Call details form error",
+    });
+}
+
 export const postButtonsService = async (uri: string, body: ButtonsBodyService, userToken?: string) => {
     toast.promise(async () => {
         try {
-            await axios.post('https://o22r9omtvk.execute-api.us-east-2.amazonaws.com/sumeet-R_1_10/' + uri, body, {
+            await axios.post(process.env.NEXT_PUBLIC_CALLS_URL + uri, body, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${userToken}`,
@@ -47,7 +71,7 @@ export const postButtonsService = async (uri: string, body: ButtonsBodyService, 
         }
     }, {
         loading: "Call details buttons fetchin...",
-        success: "Call details buttons founded",
-        error: "Call details error",
+        success: "Call details buttons success",
+        error: "Call details buttons error",
     });
 }
