@@ -107,7 +107,12 @@ export const CallDetailPage = ({ callDetails }: Props) => {
             other_info: "",
             input_buttons_data: bodyRequest,
         };
-        postFormService(uri, body, userToken);
+        const response = await postFormService(uri, body, userToken);
+        if (response === "success") {
+            if (typeof navigator !== "undefined") {
+                window.history.back();
+            }
+        }
     }
 
     const handleActionButtonClick = async (id: string) => {
