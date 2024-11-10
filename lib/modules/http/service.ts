@@ -23,7 +23,7 @@ export class HttpService {
             return await this.axiosConfig.post(uri, data);
         }
         catch (e) {
-            console.log(`Error al intentar hacer peticion http: ${e}`);
+            console.error(`Failed on http request: ${e}`);
         }
     }
 }
