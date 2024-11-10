@@ -1,41 +1,37 @@
 "use client";
 
 import { db } from "@/lib/firebaseClient";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { LoaderCircle } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CallDetailPage } from "./CallDetailPage";
+import { CallData } from "./CallDetail.model";
 
 export default function CallDetailConnector() {
   const { callId } = useParams();
-  const [callDetails, setCallDetails] = useState(null);
+  const [callDetails, setCallDetails] = useState<CallData>();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCallDetails = async () => {
-      setIsLoading(true);
+    const collectionName = process.env.NEXT_PUBLIC_CALLS_COLLECTION_NAME || '';
 
-      const collectionName = process.env.NEXT_PUBLIC_CALLS_COLLECTION_NAME || '';
+    const callDocRef = doc(db, collectionName, callId.toString());
 
-      try {
-        const callDocRef = doc(db, collectionName, callId.toString()); // use callId as document ID
-        const callSnapshot: any = await getDoc(callDocRef);
-
-        if (callSnapshot.exists()) {
-          const data = callSnapshot.data();
-          setCallDetails({ id: callSnapshot.id, ...data });
-        } else {
-          console.error("Call not found");
-        }
-      } catch (error) {
-        console.error("Error fetching call details:", error);
-      } finally {
-        setIsLoading(false);
+    // handing listener using onSnapshot from firestore
+    const unsubscribe = onSnapshot(callDocRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.data();
+        setCallDetails({ id: snapshot.id, ...data });
+      } else {
+        console.error("Call not found");
       }
-    };
+      setIsLoading(false);
+    }, (error) => {
+      console.error("Error listening to call details:", error);
+    });
 
-    fetchCallDetails();
+    return () => unsubscribe();
   }, [callId]);
 
   if (isLoading) {
