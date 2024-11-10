@@ -31,6 +31,8 @@
                 font-weight: 500;
                 margin-right: 10px;
                 margin-bottom: 20px;
+                max-width: 180px;
+                text-align: left;
             }
 
             .buttonSelected {
