@@ -20,7 +20,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { DocumentData } from "firebase/firestore";
 import { cn } from "@/lib/utils";
-import { toast } from "sonner";
 import {
   Tooltip,
   TooltipProvider,
@@ -34,8 +33,9 @@ import {
 import { BsBuildings } from "react-icons/bs";
 import { useAudio } from "./audio-context";
 import './tymeline-styles.css';
-import { HttpService } from "@/lib/modules/http/service";
+import { postButtonsService } from "@/lib/modules/http/service";
 import { useAuth } from "@/providers/auth-provider";
+import { ButtonsBodyService } from "@/lib/modules/http/services.model";
 
 type CallCardProps = {
   call: DocumentData;
@@ -115,26 +115,16 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
   };
 
   async function handleCallNow() {
-    const token = await user?.getIdToken();
-    const httpService = new HttpService(undefined, { 'x-api-key': `${token}` });
-
-    toast.promise(async () => {
-      const response = await httpService.post('/action_request', {
-        id: "",
+    const userToken = await user?.getIdToken();
+    const uri = `action_request`;
+    const body: ButtonsBodyService = {
+        id: "initiate_outgoing_call",
         call_id: call.id,
         location_id: call.location_id,
         phone_number: call.phone_number,
         other_info: ""
-      });
-      if (!response) {
-        throw new Error("Failed to call now");
-      }
-    },
-      {
-        loading: "Calling now...",
-        success: "Call initiated successfully",
-        error: "Failed to initiate call",
-      })
+    };
+    postButtonsService(uri, body, userToken);
   }
 
   const formatPhoneNumber = (phoneNumber: string) => {
