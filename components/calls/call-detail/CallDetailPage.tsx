@@ -17,6 +17,7 @@ import { RightAreaSection } from "./CallDetailsComponents/RightAreaSection/Right
 import { HttpService } from "@/lib/modules/http/service";
 import { Toaster, toast } from "sonner";
 import { getUserToken } from "@/app/(auth)/sign-in/page";
+import axios from "axios";
 
 interface Props {
     callDetails: CallData;
@@ -130,21 +131,31 @@ export const CallDetailPage = ({ callDetails }: Props) => {
         }
     }
 
-    const handleActionButtonClick = (id: string) => {
+    const handleActionButtonClick = async (id: string) => {
+        const userToken = await user?.getIdToken();
+        const uri = `https://o22r9omtvk.execute-api.us-east-2.amazonaws.com/sumeet-R_1_10/action_request`;
         const body = {
-            token: getUserToken(),
+            id,
             call_id: callDetails.id,
-            info_button_id: id
+            location_id: callDetails.location_id,
+            phone_number: callDetails.phone_number,
+            other_info: ""
         };
-
         toast.promise(async () => {
-            const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/action`;
-            console.log('BUTTON ACTION URI: ', uri);
-            console.log('BUTTON ACTION BODY: ', body);
-
-            const response = await httpService.post(uri, body)
-            if (!response) {
-                throw new Error(`Error call details: ${response}`);
+            try {
+                await axios.post(uri, body, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${userToken}`,
+                        'x-api-key': userToken
+                    }
+                });
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    console.error('Axios Error:', error.response?.data || error.message);
+                } else {
+                    console.error('Unknown Error:', error);
+                }
             }
         }, {
             loading: "Call details fetchin...",
@@ -153,21 +164,31 @@ export const CallDetailPage = ({ callDetails }: Props) => {
         });
     }
 
-    const handleInfoButtonClick = (id: string) => {
+    const handleInfoButtonClick = async (id: string) => {
+        const userToken = await user?.getIdToken();
+        const uri = `https://o22r9omtvk.execute-api.us-east-2.amazonaws.com/sumeet-R_1_10/info_request`;
         const body = {
-            token: getUserToken(),
+            id,
             call_id: callDetails.id,
-            info_button_id: id
+            location_id: callDetails.location_id,
+            phone_number: callDetails.phone_number,
+            other_info: ""
         };
-
         toast.promise(async () => {
-            const uri = `${process.env.NEXT_PUBLIC_CALLS_URL}/call_details/info`;
-            console.log('BUTTON INFO URI: ', uri);
-            console.log('BUTTON INFO BODY: ', body);
-
-            const response = await httpService.post(uri, body)
-            if (!response) {
-                throw new Error(`Error call details: ${response}`);
+            try {
+                await axios.post(uri, body, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${userToken}`,
+                        'x-api-key': userToken
+                    }
+                });
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    console.error('Axios Error:', error.response?.data || error.message);
+                } else {
+                    console.error('Unknown Error:', error);
+                }
             }
         }, {
             loading: "Call details fetchin...",
