@@ -33,7 +33,19 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Toaster position="top-right" />
+        <Toaster
+          position="top-right"
+          richColors
+          toastOptions={{
+            style: {
+              fontSize: "20px",
+              background: "#333",
+              color: "#fff",
+              borderRadius: "8px",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            },
+          }}
+        />
         <AuthProvider initialAuth={!!tokens}>
           <AudioProvider>{children}</AudioProvider>
         </AuthProvider>

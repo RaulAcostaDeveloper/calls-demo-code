@@ -9,7 +9,6 @@ import './CallDetailStyle.css';
 import { FocusAreaSection } from "./CallDetailsComponents/FocusAreaSection/FocusAreaSection";
 import { RightAreaSection } from "./CallDetailsComponents/RightAreaSection/RightAreaSection";
 import { postButtonsService, postFormService } from "@/lib/modules/http/service";
-import { Toaster } from "sonner";
 import { ButtonsBodyService, ToastMessages } from "@/lib/modules/http/services.model";
 
 interface Props {
@@ -158,21 +157,6 @@ export const CallDetailPage = ({ callDetails }: Props) => {
 
     return (
         <div className="callDetailPageStyle">
-
-            <Toaster
-                position="top-right"
-                richColors
-                toastOptions={{
-                    style: {
-                        fontSize: "20px",
-                        background: "#333",
-                        color: "#fff",
-                        borderRadius: "8px",
-                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                    },
-                }}
-            />
-
             <Header
                 phoneNumber={callDetails.phone_number}
                 location={userLocation}
