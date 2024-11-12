@@ -28,6 +28,7 @@ import {
 } from "../ui/tooltip";
 import {
   AgentIcon,
+  LoaderCustomIcon,
   MissedCallIcon,
 } from "@/constants/icons";
 import { BsBuildings } from "react-icons/bs";
@@ -121,13 +122,13 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
       loading: 'Starting call',
       success: 'Successfully started call',
       error: 'Failed to start call, please try again',
-  }
+    }
     const body: ButtonsBodyService = {
-        id: "initiate_outgoing_call",
-        call_id: call.id,
-        location_id: call.location_id,
-        phone_number: call.phone_number,
-        other_info: ""
+      id: "initiate_outgoing_call",
+      call_id: call.id,
+      location_id: call.location_id,
+      phone_number: call.phone_number,
+      other_info: ""
     };
     postButtonsService(uri, body, toastMessages, userToken);
   }
@@ -355,6 +356,9 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
         )}
         {call.ongoing_call_status && (
           <div className="callOngoinStatus">
+            <LoaderCustomIcon
+              className="animate-spin h-3 w-4 lg:h-6 mr-2 duration-900 opacity-40"
+            />
             <p>{call.ongoing_call_status}</p>
             <Image src={'/assets/greenCallIcon.png'} width={20} height={20} alt="green call icon" />
           </div>
