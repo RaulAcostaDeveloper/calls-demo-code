@@ -73,7 +73,7 @@ export const Header = ({ phoneNumber, location, callDate, instructionLabels, tim
                 console.error('Timezone is not correct')
             }
 
-            const interval = setInterval(updateTime, 60000);
+            const interval = setInterval(updateTime, 30000);
 
             return () => clearInterval(interval);
         }
