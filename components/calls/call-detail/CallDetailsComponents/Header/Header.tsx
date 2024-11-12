@@ -35,15 +35,15 @@ export const Header = ({ phoneNumber, location, callDate, instructionLabels, tim
                 setHeaderHeight(headerRef.current.offsetHeight);
             }
         };
-    
+
         const observer = new ResizeObserver(updateHeight);
-    
+
         if (headerRef.current) {
             setTimeout(() => {
                 observer.observe(headerRef.current as HTMLDivElement);
             }, 0);
         }
-    
+
         return () => {
             if (headerRef.current) {
                 observer.unobserve(headerRef.current);
@@ -52,24 +52,32 @@ export const Header = ({ phoneNumber, location, callDate, instructionLabels, tim
     }, []);
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
+        if (typeof window !== 'undefined' && timezone) {
+
             const updateTime = () => {
                 const now = new Date();
-                const formattedTime = now.toLocaleTimeString('en-US', {
+
+                const formattedTime = new Intl.DateTimeFormat('en-US', {
                     hour: '2-digit',
                     minute: '2-digit',
                     hour12: true,
-                });
+                    timeZone: timezone,
+                }).format(now);
                 setCurrentTime(formattedTime);
             };
 
-            updateTime();
+            try {
+                updateTime();
+            } catch (error) {
+                toast.error('Timezone is not correct');
+                console.error('Timezone is not correct')
+            }
 
-            const interval = setInterval(updateTime, 1000);
+            const interval = setInterval(updateTime, 60000);
 
             return () => clearInterval(interval);
         }
-    }, []);
+    }, [timezone]);
 
     const copyContent = async (text: string) => {
         if (typeof navigator !== "undefined") {
