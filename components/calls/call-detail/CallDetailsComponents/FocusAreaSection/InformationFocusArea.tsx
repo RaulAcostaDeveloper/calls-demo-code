@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import DOMPurify from 'dompurify';
 
 interface Props {
     title: string;
@@ -9,6 +10,11 @@ interface Props {
 
 export const InformationFocusArea = ({ title, html }: Props) => {
     const [open, setOpen] = useState(true);
+    const [sanitizedHtml, setSanitizedHtml] = useState('');
+
+    useEffect(()=>{
+        setSanitizedHtml(DOMPurify.sanitize(html));
+    },[html])
 
     return (
         <div className='section'>
@@ -18,8 +24,8 @@ export const InformationFocusArea = ({ title, html }: Props) => {
                 <img src="/assets/arrowDownIcon.png" alt='Arrow Down Icon' />
             </div>
 
-            {/* There is not specifit html so it is impossible to style from here */}
-            {open && <div dangerouslySetInnerHTML={{ __html: html }} className="noSpecificHtml" />}
+            {open && <div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} className="noSpecificHtml" />}
+        
         </div>
     )
 }
