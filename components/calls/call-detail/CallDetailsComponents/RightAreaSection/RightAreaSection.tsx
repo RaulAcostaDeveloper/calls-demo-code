@@ -7,18 +7,19 @@ import './RightAreaSection.css';
 
 interface Props {
     callDetails: CallData;
+    formDetails: CallData;
     handleSaveForm: (data: RowElements[]) => void;
     handleActionButtonClick: (id: string) => void;
     handleInfoButtonClick: (id: string) => void;
 }
 
-export const RightAreaSection = ({ callDetails, handleSaveForm, handleActionButtonClick, handleInfoButtonClick }: Props) => {
+export const RightAreaSection = ({ callDetails, formDetails, handleSaveForm, handleActionButtonClick, handleInfoButtonClick }: Props) => {
     return (
         <div className="rightAreaSection">
             <div className='inner'>
                 <FormSection
-                    inputButtonsData={callDetails.input_buttons_data}
-                    inputButtonsSchema={callDetails.input_buttons_schema}
+                    inputButtonsData={formDetails.input_buttons_data}
+                    inputButtonsSchema={formDetails.input_buttons_schema}
                     handleSaveForm={handleSaveForm} />
                 <InfoButtonsSection 
                     buttons={callDetails.info_buttons_section}

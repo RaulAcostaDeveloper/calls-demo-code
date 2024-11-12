@@ -13,6 +13,7 @@ import { ButtonsBodyService, ToastMessages } from "@/lib/modules/http/services.m
 
 interface Props {
     callDetails: CallData;
+    formDetails: CallData;
 }
 
 function formatDate(inputDate: string): string {
@@ -37,7 +38,7 @@ function formatFormData(data: RowElements[]) {
     return result;
 }
 
-export const CallDetailPage = ({ callDetails }: Props) => {
+export const CallDetailPage = ({ callDetails, formDetails }: Props) => {
     const [locationsMap, setLocationsMap] = useState<{ [key: string]: any }>({});
     const [userLocation, setUserLocation] = useState('');
     const [callFormatedDate, setCallFormatedDate] = useState('');
@@ -169,6 +170,7 @@ export const CallDetailPage = ({ callDetails }: Props) => {
                 <FocusAreaSection focusAreaSection={callDetails.focus_area_section} />
                 <RightAreaSection
                     callDetails={callDetails}
+                    formDetails={formDetails}
                     handleSaveForm={handleSaveForm}
                     handleActionButtonClick={handleActionButtonClick}
                     handleInfoButtonClick={handleInfoButtonClick} />
