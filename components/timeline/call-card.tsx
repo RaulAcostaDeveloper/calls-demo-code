@@ -35,7 +35,7 @@ import { useAudio } from "./audio-context";
 import './tymeline-styles.css';
 import { postButtonsService } from "@/lib/modules/http/service";
 import { useAuth } from "@/providers/auth-provider";
-import { ButtonsBodyService } from "@/lib/modules/http/services.model";
+import { ButtonsBodyService, ToastMessages } from "@/lib/modules/http/services.model";
 
 type CallCardProps = {
   call: DocumentData;
@@ -117,6 +117,11 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
   async function handleCallNow() {
     const userToken = await user?.getIdToken();
     const uri = `action_request`;
+    const toastMessages: ToastMessages = {
+      loading: 'Starting call',
+      success: 'Successfully started call',
+      error: 'Failed to start call, please try again',
+  }
     const body: ButtonsBodyService = {
         id: "initiate_outgoing_call",
         call_id: call.id,
@@ -124,7 +129,7 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
         phone_number: call.phone_number,
         other_info: ""
     };
-    postButtonsService(uri, body, userToken);
+    postButtonsService(uri, body, toastMessages, userToken);
   }
 
   const formatPhoneNumber = (phoneNumber: string) => {

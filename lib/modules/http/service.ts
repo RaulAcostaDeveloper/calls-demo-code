@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { toast } from "sonner";
-import { ButtonsBodyService, FormBodyService } from "./services.model";
+import { ButtonsBodyService, FormBodyService, ToastMessages } from "./services.model";
 
 export class HttpService {
     protected axiosConfig: AxiosInstance;
@@ -28,7 +28,7 @@ export class HttpService {
     }
 }
 
-export const postFormService = async (uri: string, body: FormBodyService, userToken?: string) => {
+export const postFormService = async (uri: string, body: FormBodyService, toastMessages: ToastMessages, userToken?: string) => {
     try {
         const responsePromise = axios.post(process.env.NEXT_PUBLIC_CALLS_URL + uri, body, {
             headers: {
@@ -39,9 +39,9 @@ export const postFormService = async (uri: string, body: FormBodyService, userTo
         });
 
         await toast.promise(responsePromise, {
-            loading: "Call details form fetching...",
-            success: "Data saved",
-            error: "Data could not be saved. Please try saving again, or click Cancel",
+            loading: toastMessages.loading,
+            success: toastMessages.success,
+            error: toastMessages.error,
         });
 
         const response = await responsePromise;
@@ -60,7 +60,7 @@ export const postFormService = async (uri: string, body: FormBodyService, userTo
 
 
 
-export const postButtonsService = async (uri: string, body: ButtonsBodyService, userToken?: string) => {
+export const postButtonsService = async (uri: string, body: ButtonsBodyService, toastMessages: ToastMessages, userToken?: string ) => {    
     try {
         const responsePromise = axios.post(process.env.NEXT_PUBLIC_CALLS_URL + uri, body, {
             headers: {
@@ -71,9 +71,9 @@ export const postButtonsService = async (uri: string, body: ButtonsBodyService, 
         });
 
         await toast.promise(responsePromise, {
-            loading: "Call details buttons fetching...",
-            success: "Data saved",
-            error: "Data could not be saved. Please try saving again, or click Cancel",
+            loading: toastMessages.loading,
+            success: toastMessages.success,
+            error: toastMessages.error,
         });
 
         const response = await responsePromise;

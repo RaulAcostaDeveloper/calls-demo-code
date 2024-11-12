@@ -10,7 +10,7 @@ import { FocusAreaSection } from "./CallDetailsComponents/FocusAreaSection/Focus
 import { RightAreaSection } from "./CallDetailsComponents/RightAreaSection/RightAreaSection";
 import { postButtonsService, postFormService } from "@/lib/modules/http/service";
 import { Toaster } from "sonner";
-import { ButtonsBodyService } from "@/lib/modules/http/services.model";
+import { ButtonsBodyService, ToastMessages } from "@/lib/modules/http/services.model";
 
 interface Props {
     callDetails: CallData;
@@ -99,6 +99,11 @@ export const CallDetailPage = ({ callDetails }: Props) => {
         const userToken = await user?.getIdToken();
         const bodyRequest = formatFormData(data);
         const uri = `input_request`;
+        const toastMessages: ToastMessages = {
+            loading: 'Saving data',
+            success: 'Successfully saved data',
+            error: 'Failed to save data, please try again or press Cancel',
+        }
         const body = {
             id: "",
             call_id: callDetails.id,
@@ -107,7 +112,7 @@ export const CallDetailPage = ({ callDetails }: Props) => {
             other_info: "",
             input_buttons_data: bodyRequest,
         };
-        const response = await postFormService(uri, body, userToken);
+        const response = await postFormService(uri, body, toastMessages, userToken);
         if (response === "success") {
             if (typeof navigator !== "undefined") {
                 window.history.back();
@@ -118,6 +123,11 @@ export const CallDetailPage = ({ callDetails }: Props) => {
     const handleActionButtonClick = async (id: string) => {
         const userToken = await user?.getIdToken();
         const uri = `action_request`;
+        const toastMessages: ToastMessages = {
+            loading: 'Sending request for action',
+            success: 'Successfully sent request for action',
+            error: 'Failed to send request for action, please try again',
+        }
         const body: ButtonsBodyService = {
             id,
             call_id: callDetails.id,
@@ -125,12 +135,17 @@ export const CallDetailPage = ({ callDetails }: Props) => {
             phone_number: callDetails.phone_number,
             other_info: ""
         };
-        postButtonsService(uri, body, userToken);
+        postButtonsService(uri, body, toastMessages, userToken);
     }
 
     const handleInfoButtonClick = async (id: string) => {
         const userToken = await user?.getIdToken();
         const uri = `info_request`;
+        const toastMessages: ToastMessages = {
+            loading: 'Sending request for action',
+            success: 'Successfully sent request for action',
+            error: 'Failed to send request for action, please try again',
+        }
         const body = {
             id,
             call_id: callDetails.id,
@@ -138,7 +153,7 @@ export const CallDetailPage = ({ callDetails }: Props) => {
             phone_number: callDetails.phone_number,
             other_info: ""
         };
-        postButtonsService(uri, body, userToken);
+        postButtonsService(uri, body, toastMessages, userToken);
     }
 
     return (

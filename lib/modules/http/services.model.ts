@@ -14,3 +14,9 @@ export interface FormBodyService {
     other_info?: string
     input_buttons_data:  Record<string, string | boolean>,
 }
+
+export interface ToastMessages {
+    loading: string,
+    success: string,
+    error: string,
+}
