@@ -7,7 +7,59 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
+  safelist: [
+    // Background color
+    ...['red', 'blue', 'green', 'yellow', 'purple', 'pink', 'gray', 'indigo', 'teal', 'orange']
+      .flatMap(color => [`bg-${color}-500`, `bg-${color}-600`, `bg-${color}-700`]),
+
+    // Text color
+    ...['red', 'blue', 'green', 'yellow', 'purple', 'pink', 'gray', 'indigo', 'teal', 'orange']
+      .flatMap(color => [`text-${color}-500`, `text-${color}-600`, `text-${color}-700`]),
+
+    // Text decoration
+    'underline',
+    'line-through',
+    'no-underline',
+    ...['red', 'blue', 'green', 'yellow', 'purple', 'pink', 'gray', 'indigo', 'teal', 'orange']
+      .flatMap(color => [`decoration-${color}-500`, `decoration-${color}-600`, `decoration-${color}-700`]),
+
+    // Spaced
+    ...Array.from({ length: 21 }, (_, i) => `p-${i}`), // padding 0 - 20
+    ...Array.from({ length: 21 }, (_, i) => `m-${i}`), // margin 0 - 20
+
+    // Flex & Grid
+    'flex',
+    'grid',
+    'inline-flex',
+    'inline-grid',
+    'justify-center',
+    'justify-between',
+    'items-center',
+    'items-start',
+    'items-end',
+
+    // Borders
+    'rounded',
+    ...['sm', 'md', 'lg', 'full'].map(size => `rounded-${size}`),
+    ...['red', 'blue', 'green', 'yellow', 'purple', 'pink', 'gray', 'indigo', 'teal', 'orange']
+      .flatMap(color => [`border-${color}-500`, `border-${color}-600`]),
+
+    // Shadows
+    'shadow',
+    'shadow-md',
+    'shadow-lg',
+
+    // Opacity 
+    ...Array.from({ length: 10 }, (_, i) => `opacity-${(i + 1) * 10}`), // opacity-10, opacity-20, ...
+
+    // Other examples
+    'overflow-hidden',
+    'overflow-scroll',
+    'w-full',
+    'h-screen',
+    'max-w-lg',
+  ],
   prefix: "",
   theme: {
     container: {
