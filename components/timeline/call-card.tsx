@@ -28,7 +28,6 @@ import {
 } from "../ui/tooltip";
 import {
   AgentIcon,
-  LoaderCustomIcon,
   MissedCallIcon,
 } from "@/constants/icons";
 import { BsBuildings } from "react-icons/bs";
@@ -356,9 +355,7 @@ export default function CallCard({ call, locationsMap }: CallCardProps) {
         )}
         {call.ongoing_call_status && (
           <div className="callOngoinStatus">
-            <LoaderCustomIcon
-              className="animate-spin h-3 w-4 lg:h-6 mr-2 duration-900 opacity-40"
-            />
+            <Image className="animate-spin duration-900 loadingIcon" src={'/assets/loader.png'} width={20} height={20} alt="green call icon" />
             <p>{call.ongoing_call_status}</p>
             <Image src={'/assets/greenCallIcon.png'} width={20} height={20} alt="green call icon" />
           </div>
